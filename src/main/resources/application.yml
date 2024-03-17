@@ -3,5 +3,8 @@ spring:
     name: ihmsserviceapi
   jpa:
     open-in-view: false
+  liquibase:
+    change-log: classpath:/db/changelog/changelog-master.xml
+    enabled: true
 server:
   port: 9091
