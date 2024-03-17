@@ -1,3 +1,7 @@
 spring:
   application:
     name: ihmsserviceapi
+  jpa:
+    open-in-view: false
+server:
+  port: 9091
