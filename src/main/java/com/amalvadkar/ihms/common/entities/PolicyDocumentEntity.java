@@ -28,4 +28,8 @@ public class PolicyDocumentEntity extends AbstractBaseEntity {
     @Column(name = "display_order", nullable = false)
     private BigDecimal displayOrder;
 
+    public String titleWithViews(){
+        return String.format("%s (%s Views)" , this.title, this.viewCount);
+    }
+
 }
