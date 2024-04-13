@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,28 +33,32 @@ public class PolicyOverviewService {
 
     private List<PolicyOverviewResModel> preparePolicyOverviewResModelList() {
         List<PolicyCategoryEntity> policyCategoryEntities = policyCategoryRepo.findAllPolicyCategories();
-        List<PolicyOverviewResModel> policyCategoryResModels = new ArrayList<>();
-        for (PolicyCategoryEntity policyCategoryEntity : policyCategoryEntities) {
-            PolicyOverviewResModel policyOverviewResModel = new PolicyOverviewResModel();
-            policyOverviewResModel.setPolicyCategoryId(policyCategoryEntity.getId());
-            policyOverviewResModel.setPolicyCategoryName(policyCategoryEntity.getName());
-            List<PolicyDocumentResModel> policyDocumentResModelList = preparePolicyDocumentResModelList(policyCategoryEntity);
-            policyOverviewResModel.setPolicyDocuments(policyDocumentResModelList);
-            policyCategoryResModels.add(policyOverviewResModel);
-        }
-        return policyCategoryResModels;
+        return policyCategoryEntities.stream()
+                .map(this::preparePolicyOverviewResModel)
+                .toList();
+    }
+
+    private PolicyOverviewResModel preparePolicyOverviewResModel(PolicyCategoryEntity policyCategoryEntity) {
+        PolicyOverviewResModel policyOverviewResModel = new PolicyOverviewResModel();
+        policyOverviewResModel.setPolicyCategoryId(policyCategoryEntity.getId());
+        policyOverviewResModel.setPolicyCategoryName(policyCategoryEntity.getName());
+        List<PolicyDocumentResModel> policyDocumentResModelList = preparePolicyDocumentResModelList(policyCategoryEntity);
+        policyOverviewResModel.setPolicyDocuments(policyDocumentResModelList);
+        return policyOverviewResModel;
     }
 
     private List<PolicyDocumentResModel> preparePolicyDocumentResModelList(PolicyCategoryEntity policyCategoryEntity) {
-        List<PolicyDocumentResModel> policyDocumentResModels = new ArrayList<>();
         List<PolicyDocumentEntity> policyDocumentEntities =
                 policyDocumentRepo.findDocumentsByPolicyCategoryId(policyCategoryEntity.getId());
-        for (PolicyDocumentEntity policyDocumentEntity : policyDocumentEntities) {
-            PolicyDocumentResModel policyDocumentResModel = new PolicyDocumentResModel();
-            policyDocumentResModel.setPolicyDocumentId(policyDocumentEntity.getId());
-            policyDocumentResModel.setPolicyDocumentTitle(policyDocumentEntity.titleWithViews());
-            policyDocumentResModels.add(policyDocumentResModel);
-        }
-        return policyDocumentResModels;
+        return policyDocumentEntities.stream()
+                .map(this::preparePolicyDocumentResModel)
+                .toList();
+    }
+
+    private PolicyDocumentResModel preparePolicyDocumentResModel(PolicyDocumentEntity policyDocumentEntity) {
+        PolicyDocumentResModel policyDocumentResModel = new PolicyDocumentResModel();
+        policyDocumentResModel.setPolicyDocumentId(policyDocumentEntity.getId());
+        policyDocumentResModel.setPolicyDocumentTitle(policyDocumentEntity.titleWithViews());
+        return policyDocumentResModel;
     }
 }
