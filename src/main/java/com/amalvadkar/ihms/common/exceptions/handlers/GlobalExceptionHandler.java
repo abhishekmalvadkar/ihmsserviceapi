@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public CustomResModel handleResourceNotFoundException(Exception ex){
+    public CustomResModel handleException(Exception ex){
         List<String> errorMessages = List.of(SOMETHING_WENT_WRONG_ERROR_MESSAGE);
         return CustomResModel.fail(errorMessages , HttpStatus.INTERNAL_SERVER_ERROR);
     }
