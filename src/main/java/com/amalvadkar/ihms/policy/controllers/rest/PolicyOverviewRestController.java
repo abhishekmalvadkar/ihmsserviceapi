@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/policy")
+@RequestMapping(value = "/api/ihms/policy")
 @RequiredArgsConstructor
 public class PolicyOverviewRestController {
     private static final String ENDPOINT_FETCH_POLICY_OVERVIEW = "/fetchpolicyoverview";

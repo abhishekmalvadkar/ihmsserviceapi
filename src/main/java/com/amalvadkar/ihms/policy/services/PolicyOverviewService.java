@@ -10,6 +10,7 @@ import com.amalvadkar.ihms.policy.models.request.ViewPolicyDocumentRequest;
 import com.amalvadkar.ihms.policy.models.response.PolicyDocumentResModel;
 import com.amalvadkar.ihms.policy.models.response.PolicyOverviewResModel;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ import static com.amalvadkar.ihms.common.utils.AppConstants.FETCHED_SUCCESSFULLY
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class PolicyOverviewService {
 
     private final PolicyCategoryRepository policyCategoryRepo;
@@ -64,9 +66,11 @@ public class PolicyOverviewService {
     }
 
     public CustomResModel viewPolicyDocument(ViewPolicyDocumentRequest viewPolicyDocumentRequest) {
+        log.debug("<<<<<<<< viewPolicyDocument()");
         Long policyDocumentId = viewPolicyDocumentRequest.policyDocumentId();
         PolicyDocumentEntity policyDocumentEntity = policyDocumentRepo.findByIdOrThrow(policyDocumentId);
         policyDocumentViewCountHelper.increaseViewCountInAsync(policyDocumentId);
+        log.debug("viewPolicyDocument() >>>>>>>");
         return CustomResModel.success(policyDocumentEntity.getPath() , CREATED_SUCCESSFULLY_RESPONSE_MESSAGE);
     }
 }
