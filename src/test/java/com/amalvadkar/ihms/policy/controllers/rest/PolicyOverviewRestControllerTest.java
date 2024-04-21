@@ -20,6 +20,12 @@ class PolicyOverviewRestControllerTest extends AbstractIT {
                 .post("/api/ihms/policy/fetchpolicyoverview")
                 .then()
                 .body("data", hasSize(2))
+                .body("data[0].policyCategoryId", is(1))
+                .body("data[0].policyCategoryName", is("General"))
+                .body("data[0].policyDocuments", hasSize(2))
+                .body("data[1].policyCategoryId", is(2))
+                .body("data[1].policyCategoryName", is("Providend Fund"))
+                .body("data[1].policyDocuments", hasSize(1))
                 .body("success", is(true))
                 .body("code", is(200))
                 .body("message", is("Fetched Successfully"));
