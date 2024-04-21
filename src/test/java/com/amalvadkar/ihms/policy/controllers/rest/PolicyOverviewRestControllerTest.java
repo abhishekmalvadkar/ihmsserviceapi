@@ -1,6 +1,6 @@
 package com.amalvadkar.ihms.policy.controllers.rest;
 
-import com.amalvadkar.ihms.common.AbstractIntegrationTest;
+import com.amalvadkar.ihms.common.AbstractIT;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 @Sql("/policy-overview-test-data.sql")
-class PolicyOverviewRestControllerTest extends AbstractIntegrationTest {
+class PolicyOverviewRestControllerTest extends AbstractIT {
 
     @Test
     void should_return_policy_documents_data_with_policy_categories() {
