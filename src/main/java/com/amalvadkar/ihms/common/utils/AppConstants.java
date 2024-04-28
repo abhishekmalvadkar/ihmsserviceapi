@@ -8,4 +8,6 @@ public interface AppConstants {
     String SOMETHING_WENT_WRONG_ERROR_MESSAGE = "Something went wrong, please contact to admin..";
     String COUNTRY_LIST = "countryList";
     String HOLIDAY_STATUS_LIST = "holidayStatusList";
+    String HOLIDAY_STATUS = "Holiday Status";
+    String CODE = "code";
 }
