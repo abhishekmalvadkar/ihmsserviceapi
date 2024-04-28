@@ -1,6 +1,7 @@
 package com.amalvadkar.ihms.common.repositories;
 
 import com.amalvadkar.ihms.common.entities.CountryEntity;
+import com.amalvadkar.ihms.common.exceptions.ResourceNotFoundException;
 import com.amalvadkar.ihms.common.models.response.KeyValueResModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface CountryRepository extends JpaRepository<CountryEntity, Long> {
+
+    String ENTITY_NAME = "Country";
 
     @Query("""
             SELECT
@@ -20,5 +23,13 @@ public interface CountryRepository extends JpaRepository<CountryEntity, Long> {
             WHERE c.deleteFlag = false
             """)
     List<KeyValueResModel> findCountryNamesWithIds();
+
+    default Long findFirstCountryId(){
+        return findCountryNamesWithIds()
+                .stream()
+                .map(KeyValueResModel::key)
+                .findFirst()
+                .orElseThrow(() -> ResourceNotFoundException.from(ENTITY_NAME));
+    }
 
 }
