@@ -6,5 +6,15 @@ spring:
   liquibase:
     change-log: classpath:/db/changelog/changelog-master.xml
     enabled: true
+
 server:
   port: 9091
+
+ihms:
+  holiday-status-list:
+    - title: "Upcoming"
+      colorCode: "#808080"
+      code: UPC
+    - title: "Has Gone"
+      colorCode: "#FF0000"
+      code: HC

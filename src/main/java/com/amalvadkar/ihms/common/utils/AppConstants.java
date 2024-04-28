@@ -6,4 +6,6 @@ public interface AppConstants {
     String FETCHED_SUCCESSFULLY_RESPONSE_MESSAGE = "Fetched Successfully";
     String CREATED_SUCCESSFULLY_RESPONSE_MESSAGE = "Created Successfully";
     String SOMETHING_WENT_WRONG_ERROR_MESSAGE = "Something went wrong, please contact to admin..";
+    String COUNTRY_LIST = "countryList";
+    String HOLIDAY_STATUS_LIST = "holidayStatusList";
 }
