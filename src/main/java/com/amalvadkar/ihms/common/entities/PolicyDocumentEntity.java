@@ -1,6 +1,11 @@
 package com.amalvadkar.ihms.common.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +15,7 @@ import java.math.BigDecimal;
 @Table(name = "policy_document")
 @Getter
 @Setter
-public class PolicyDocumentEntity extends AbstractBaseEntity {
+public class PolicyDocumentEntity extends AbstractIdBaseEntity {
 
     @Column(name = "title", nullable = false)
     private String title;
