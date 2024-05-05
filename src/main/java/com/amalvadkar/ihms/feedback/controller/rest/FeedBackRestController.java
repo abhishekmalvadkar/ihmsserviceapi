@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.amalvadkar.ihms.common.utils.AppConstants.FORM_DATA_JSON_DATA;
+import static com.amalvadkar.ihms.common.utils.AppConstants.REQUEST_HEADER_USER_ID;
+
 @RestController
 @RequestMapping(value = "/api/ihms/feedback")
 @RequiredArgsConstructor
@@ -21,8 +24,8 @@ public class FeedBackRestController {
     private final FeedbackService feedbackService;
 
     @PostMapping(ENDPOINT_CREATE_FEEDBACK)
-    public ResponseEntity<CustomResModel> createFeedback(@RequestParam("data") String createFeedbackReqJson,
-                                                         @RequestHeader("userid") Long loggedInUserId) {
+    public ResponseEntity<CustomResModel> createFeedback(@RequestParam(FORM_DATA_JSON_DATA) String createFeedbackReqJson,
+                                                         @RequestHeader(REQUEST_HEADER_USER_ID) Long loggedInUserId) {
         return ResponseEntity.ok(feedbackService.createFeedback(createFeedbackReqJson, loggedInUserId));
     }
 

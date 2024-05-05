@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Feedback Added Successfully</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+    <style type="text/css">
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 48px;
+        }
+
+    </style>
+</head>
+<body>
+
+<p>
+    Hello, <span th:text="${username}"></span>
+</p>
+
+<p>
+    Your feedback has been added successfully, please find below submitted details
+</p>
+
+<p>
+    Feedback ID : <b><span th:text="${feedbackId}"></span></b>
+</p>
+
+<p>
+    Feedback Title : <b><span th:text="${feedbackTitle}"></span></b>
+</p>
+
+<p>
+    Feedback Description : <b><span th:utext="${feedbackDescription}"></span></b>
+</p>
+
+<p>
+    Feedback Status : <b><span th:text="${feedbackStatus}"></span></b>
+</p>
+
+<p style="color:blue">You can check your feedback current status on IHMS portal using feedback ID</p>
+
+<p>
+    Thanks & Regards,<br>
+    IHMS Team
+</p>
+
+</body>
+</html>
