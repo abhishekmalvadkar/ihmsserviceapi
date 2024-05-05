@@ -20,6 +20,7 @@
 		<jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
 		<ulid-creator.version>5.2.3</ulid-creator.version>
 		<jsoup.version>1.17.2</jsoup.version>
+		<greenmail-junit5.version>2.1.0-alpha-4</greenmail-junit5.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -92,6 +93,12 @@
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>${jsoup.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.icegreen</groupId>
+			<artifactId>greenmail-junit5</artifactId>
+			<version>${greenmail-junit5.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>

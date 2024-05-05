@@ -1,6 +1,5 @@
 spring:
   mail:
-    default-encoding: ${EMAIL_DEFAULT_ENCODING}
     host: ${EMAIL_HOST}
     username: ${EMAIL_ID}
     password: ${APP_PASSWORD}
