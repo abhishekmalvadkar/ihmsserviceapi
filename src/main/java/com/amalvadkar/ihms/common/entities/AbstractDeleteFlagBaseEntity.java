@@ -8,8 +8,8 @@ import lombok.Setter;
 @MappedSuperclass
 @Getter
 @Setter
-public abstract class AbstractDeleteFlagBaseEntity extends AbstractIdBaseEntity {
+public abstract class AbstractDeleteFlagBaseEntity {
 
     @Column(name = "delete_flag", nullable = false)
-    private Boolean deleteFlag;
+    private boolean deleteFlag;
 }
