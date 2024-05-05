@@ -3,6 +3,8 @@ package com.amalvadkar.ihms.common;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.mail.MailSenderAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
@@ -12,6 +14,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @Tag("it")
 @Import(ContainersConfig.class)
+@EnableAutoConfiguration(exclude = MailSenderAutoConfiguration.class)
 public abstract class AbstractIT {
 
     @LocalServerPort
