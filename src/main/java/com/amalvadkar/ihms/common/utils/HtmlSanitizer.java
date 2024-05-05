@@ -7,14 +7,14 @@ import org.jsoup.safety.Safelist;
 @Slf4j
 public class HtmlSanitizer {
 
-    private HtmlSanitizer() {
-        throw new IllegalStateException("You can't create object for HtmlSanitizer utility class");
-    }
-
-    public static String sanitize(String unsafeHtml) {
+    public static String sanitize(String unsafeHtml){
         String safeHtml = Jsoup.clean(unsafeHtml, Safelist.relaxed());
         log.info("Html sanitized successfully");
         return safeHtml;
+    }
+
+    private HtmlSanitizer(){
+        throw new IllegalStateException("You can't create object for HtmlSanitizer utility class");
     }
 
 }

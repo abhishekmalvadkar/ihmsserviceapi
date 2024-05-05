@@ -25,7 +25,7 @@ public class EmailSender {
     @Async
     public void sendInAsync(MailDTO mailDTO) {
         try {
-            if (emailSendIsDisbaled()) {
+            if (emailSendIsDisbaled()){
                 log.warn("Email will not be send because email send feature is disabled");
                 return;
             }
