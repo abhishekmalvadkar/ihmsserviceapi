@@ -1,16 +1,25 @@
 package com.amalvadkar.ihms.policy.controllers.rest;
 
 import com.amalvadkar.ihms.common.AbstractIT;
+import com.amalvadkar.ihms.common.entities.PolicyDocumentEntity;
+import com.amalvadkar.ihms.common.repositories.PolicyDocumentRepository;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 
 import static io.restassured.RestAssured.given;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 @Sql("/policy-overview-test-data.sql")
 class PolicyOverviewRestControllerTest extends AbstractIT {
+
+    @Autowired
+    PolicyDocumentRepository policyDocumentRepo;
 
     @Test
     void should_return_policy_documents_data_with_policy_categories() {
@@ -49,6 +58,15 @@ class PolicyOverviewRestControllerTest extends AbstractIT {
                 .body("success", is(true))
                 .body("code", is(200))
                 .body("message", is("Created Successfully"));
+
+        await().atMost(2, SECONDS).untilAsserted(() -> {
+            Long viewCount = policyDocumentRepo.findById(1L)
+                    .map(PolicyDocumentEntity::getViewCount)
+                    .orElseThrow();
+            assertThat(viewCount).isEqualTo(1L);
+        });
+
+
 
     }
 
