@@ -42,7 +42,7 @@ class PolicyOverviewRestControllerTest extends AbstractIT {
     }
 
     @Test
-    void should_return_policy_document_drive_url_for_passed_valid_document_id() {
+    void should_return_policy_document_drive_url_for_passed_valid_document_id_and_increment_policy_document_view_count() {
         var requestPayload = """
                 {
                     "policyDocumentId" : 1
