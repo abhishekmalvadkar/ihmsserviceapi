@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @Table(name = "holiday_overview")
 @Getter
 @Setter
-public class HolidayOverviewEntity extends AbstractBaseEntity {
+public class HolidayOverviewEntity extends AbstractIdBaseEntity {
 
     @Column(name = "title", nullable = false)
     private String title;

@@ -18,6 +18,9 @@
 		<properties-maven-plugin.version>1.2.1</properties-maven-plugin.version>
 		<sonar-maven-plugin.version>3.11.0.3922</sonar-maven-plugin.version>
 		<jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
+		<ulid-creator.version>5.2.3</ulid-creator.version>
+		<jsoup.version>1.17.2</jsoup.version>
+		<greenmail-junit5.version>2.0.1</greenmail-junit5.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -73,6 +76,31 @@
 			<artifactId>mysql</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.github.f4b6a3</groupId>
+			<artifactId>ulid-creator</artifactId>
+			<version>${ulid-creator.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>${jsoup.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.icegreen</groupId>
+			<artifactId>greenmail-junit5</artifactId>
+			<version>${greenmail-junit5.version}</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>

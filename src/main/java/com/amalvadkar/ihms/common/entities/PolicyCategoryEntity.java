@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Table(name = "policy_category")
 @Getter
 @Setter
-public class PolicyCategoryEntity extends AbstractBaseEntity {
+public class PolicyCategoryEntity extends AbstractIdBaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;

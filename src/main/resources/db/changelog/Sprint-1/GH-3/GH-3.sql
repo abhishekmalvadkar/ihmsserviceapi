@@ -7,14 +7,25 @@ create table users
     name varchar(100) not null,
     email varchar(255) not null,
     delete_flag bit(1) not null default 0,
-    active bit(1) not null default 1
+    active bit(1) not null default 1,
+    created_on datetime not null,
+    created_by bigint,
+    updated_on datetime,
+    updated_by bigint
 );
 
---changeset Abhishek Malvadkar:2-insert-system-user
-insert into users(id,name, email)
-values (1, "SYSTEM" ,"test@test.com");
+--changeset Abhishek Malvadkar:2-create-foreign-key-constraints-for-users-table
+alter table users add constraint fk_tbl_users_col_created_by_tbl_users_col_id
+foreign key(created_by) references users(id);
 
---changeset Abhishek Malvadkar:3-create-policy-category-table
+alter table users add constraint fk_tbl_users_col_updated_by_tbl_users_col_id
+foreign key(updated_by) references users(id);
+
+--changeset Abhishek Malvadkar:3-insert-system-user
+insert into users(id,name, email, created_on)
+values (1, "SYSTEM" ,"test@test.com", utc_timestamp());
+
+--changeset Abhishek Malvadkar:4-create-policy-category-table
 create table policy_category
 (
     id bigint auto_increment primary key,
@@ -27,14 +38,14 @@ create table policy_category
     updated_by bigint
 );
 
---changeset Abhishek Malvadkar:4-create-foreign-key-constraints-for-policy-category-table
+--changeset Abhishek Malvadkar:5-create-foreign-key-constraints-for-policy-category-table
 alter table policy_category add constraint fk_tbl_policy_category_col_created_by_tbl_users_col_id
 foreign key(created_by) references users(id);
 
 alter table policy_category add constraint fk_tbl_policy_category_col_updated_by_tbl_users_col_id
 foreign key(updated_by) references users(id);
 
---changeset Abhishek Malvadkar:5-create-policy-document-table
+--changeset Abhishek Malvadkar:6-create-policy-document-table
 create table policy_document
 (
     id bigint auto_increment primary key,
@@ -50,7 +61,7 @@ create table policy_document
     updated_by bigint
 );
 
---changeset Abhishek Malvadkar:6-create-foreign-key-constraints-for-policy-document-table
+--changeset Abhishek Malvadkar:7-create-foreign-key-constraints-for-policy-document-table
 alter table policy_document add constraint fk_policy_document_created_by_users_id
 foreign key(created_by) references users(id);
 
@@ -60,13 +71,13 @@ foreign key(updated_by) references users(id);
 alter table policy_document add constraint fk_policy_document_policy_category_id_policy_category_id
 foreign key(policy_category_id) references policy_category(id);
 
---changeset Abhishek Malvadkar:7-insert-policy-categories
+--changeset Abhishek Malvadkar:8-insert-policy-categories
 insert into policy_category(id, name, display_order, created_by, created_on) values
 (1, 'General', 1, 1, utc_timestamp()),
 (2, 'Providend Fund', 2, 1, utc_timestamp()),
 (3, 'Exit', 3, 1, utc_timestamp());
 
---changeset Abhishek Malvadkar:8-insert-policy-documents
+--changeset Abhishek Malvadkar:9-insert-policy-documents
 insert into policy_document(id, title,policy_category_id, path, display_order, created_by, created_on) values
 (1, 'Join Policy', 1 , 'https://docs.google.com/document/d/1hIJ9ZdXktdLtSEQx3i66v3oyO4a9bid3My5ihopKEXg/preview', 1, 1, utc_timestamp()),
 (2, 'Leave Policy',1,  'https://docs.google.com/document/d/1bsVP1l2cQJliOLXx2AdWhEVPXC2VB0AVCx1PXy-d070/preview', 2, 1, utc_timestamp());

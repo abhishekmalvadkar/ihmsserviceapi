@@ -13,7 +13,7 @@ import lombok.Setter;
 @Table(name = "country")
 @Getter
 @Setter
-public class CountryEntity extends AbstractBaseEntity {
+public class CountryEntity extends AbstractIdBaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;

@@ -1,6 +1,12 @@
 package com.amalvadkar.ihms.common.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,5 +30,16 @@ public abstract class AbstractBaseEntity extends AbstractDeleteFlagBaseEntity {
 
     @Column(name = "updated_on")
     private Instant updatedOn;
+
+
+    @PrePersist
+    public void prePersistForBaseEntity() {
+        this.createdOn = Instant.now();
+    }
+
+    @PreUpdate
+    public void preUpdateForBaseEntity() {
+        this.updatedOn = Instant.now();
+    }
 
 }

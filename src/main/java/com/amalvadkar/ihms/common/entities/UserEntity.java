@@ -10,7 +10,7 @@ import lombok.Setter;
 @Table(name = "users")
 @Getter
 @Setter
-public class UserEntity extends AbstractDeleteFlagBaseEntity {
+public class UserEntity extends AbstractIdBaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
