@@ -14,6 +14,14 @@ public record ApplicationProperties(
         @NotEmpty(message = "holidayStatusList property should not be null or empty")
         List<HolidayStatusDTO> holidayStatusList,
         @DefaultValue("false")
-        boolean emailSendEnabled
+        boolean emailSendEnabled,
+        @NotEmpty(message = "bucketName property should not be null or empty")
+        String bucketName,
+        @DefaultValue("7200")
+        Long signedUrlExpiryTimeInSec,
+
+        @DefaultValue("true")
+        boolean blobStorageEnabled
+
 ) {
 }
