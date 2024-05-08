@@ -31,3 +31,5 @@ ihms:
     - title: "Has Gone"
       colorCode: "#FF0000"
       code: HG
+  bucket-name: ${BUCKET_NAME}
+  signed-url-expiry-timeIn-sec: 3600
