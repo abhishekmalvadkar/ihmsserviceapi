@@ -1,5 +1,6 @@
 package com.amalvadkar.ihms.common;
 
+import com.amalvadkar.ihms.TestConfig;
 import com.icegreen.greenmail.configuration.GreenMailConfiguration;
 import com.icegreen.greenmail.junit5.GreenMailExtension;
 import com.icegreen.greenmail.util.ServerSetupTest;
@@ -16,7 +17,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @Tag("it")
-@Import(ContainersConfig.class)
+@Import({ContainersConfig.class , TestConfig.class})
 @ActiveProfiles("it")
 public abstract class AbstractIT {
 

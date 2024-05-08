@@ -73,10 +73,4 @@ public class AppConfig {
 
     }
 
-    @Bean("fireBaseStorage")
-    @Profile("it")
-    public Storage fireBaseStorageForIT() {
-        return StorageOptions.newBuilder().build().getService();
-    }
-
 }
