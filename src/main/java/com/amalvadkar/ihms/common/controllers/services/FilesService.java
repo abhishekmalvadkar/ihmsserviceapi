@@ -18,9 +18,9 @@ import static com.amalvadkar.ihms.common.utils.AppConstants.CREATED_SUCCESSFULLY
 public class FilesService {
 
     private final DataBucketHelper dataBucketHelper;
-    private final FileMetadataRepository fileMetadataRepos;
+    private final FileMetadataRepository fileMetadataRepo;
     public CustomResModel viewFile(ViewFileRequest viewFileRequest) {
-        FileMetadataEntity fileMetadataEntity = fileMetadataRepos.findByIdAndDeleteFlagIsFalse(viewFileRequest.fileId())
+        FileMetadataEntity fileMetadataEntity = fileMetadataRepo.findByIdAndDeleteFlagIsFalse(viewFileRequest.fileId())
                 .orElseThrow(() -> new ResourceNotFoundException("File meta data not found"));
         String signedUrl = dataBucketHelper.signedUrl(fileMetadataEntity.getPath(), fileMetadataEntity.getFileName());
         return CustomResModel.success(signedUrl, CREATED_SUCCESSFULLY_RESPONSE_MESSAGE);
