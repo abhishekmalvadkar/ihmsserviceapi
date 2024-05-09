@@ -21,7 +21,10 @@ public record ApplicationProperties(
         Long signedUrlExpiryTimeInSec,
 
         @DefaultValue("true")
-        boolean blobStorageEnabled
+        boolean blobStorageEnabled,
+
+        @DefaultValue("feedbackImagesBasePath property should not be null or empty")
+        String feedbackImagesBasePath
 
 ) {
 }
