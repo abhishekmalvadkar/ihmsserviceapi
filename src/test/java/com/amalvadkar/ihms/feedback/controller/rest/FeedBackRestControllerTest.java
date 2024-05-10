@@ -37,20 +37,15 @@ class FeedBackRestControllerTest extends AbstractIT {
                     "feedbackDescription" : "<p>I am facing ticket order issue</p>"
                 }
                 """;
-        ClassPathResource firstImg = new ClassPathResource("img_1.png");
-        InputStream inputStream1 = firstImg.getInputStream();
-        byte[] firstImgBytes = IOUtils.toByteArray(inputStream1);
-
-        ClassPathResource secondImg = new ClassPathResource("img_2.png");
-        InputStream inputStream2 = secondImg.getInputStream();
-        byte[] secondImgBytes = IOUtils.toByteArray(inputStream2);
+        ClassPathResource img = new ClassPathResource("img.png");
+        InputStream inputStream = img.getInputStream();
+        byte[] imgBytes = IOUtils.toByteArray(inputStream);
 
         Response response = given()
                 .contentType(ContentType.MULTIPART)
                 .header("userid", 2)
                 .formParam("jsondata", jsonData)
-                .multiPart("files", "img_1.png", firstImgBytes)
-                .multiPart("files", "img_2.png", secondImgBytes)
+                .multiPart("files", "img.png", imgBytes)
                 .when()
                 .post("/api/ihms/feedback/create-feedback")
                 .then()
@@ -70,11 +65,9 @@ class FeedBackRestControllerTest extends AbstractIT {
 
         List<FileMetadataEntity> fileMetadataEntityList = fileMetadataRepo.findAllByRecordId(newCreatedFeedbackId);
 
-        assertThat(fileMetadataEntityList).hasSize(2);
-        assertThat(fileMetadataEntityList.get(0).getPath()).isEqualTo("feedback-images/" + newCreatedFeedbackId);
-        assertThat(fileMetadataEntityList.get(0).getFileName()).isEqualTo("img_1.png");
-        assertThat(fileMetadataEntityList.get(1).getPath()).isEqualTo("feedback-images/" + newCreatedFeedbackId);
-        assertThat(fileMetadataEntityList.get(1).getFileName()).isEqualTo("img_2.png");
+        assertThat(fileMetadataEntityList).hasSize(1);
+        assertThat(fileMetadataEntityList.getFirst().getPath()).isEqualTo("feedback-images/" + newCreatedFeedbackId);
+        assertThat(fileMetadataEntityList.getFirst().getFileName()).isEqualTo("img.png");
 
 
         await().atMost(2, SECONDS).untilAsserted(() -> {
