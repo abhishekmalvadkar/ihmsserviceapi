@@ -71,10 +71,10 @@ class FeedBackRestControllerTest extends AbstractIT {
         List<FileMetadataEntity> fileMetadataEntityList = fileMetadataRepo.findAllByRecordId(newCreatedFeedbackId);
 
         assertThat(fileMetadataEntityList).hasSize(2);
-        assertThat(fileMetadataEntityList.getFirst().getPath()).isEqualTo("feedback-images/" + newCreatedFeedbackId);
-        assertThat(fileMetadataEntityList.getFirst().getFileName()).isEqualTo("img_1.png");
-        assertThat(fileMetadataEntityList.getLast().getPath()).isEqualTo("feedback-images/" + newCreatedFeedbackId);
-        assertThat(fileMetadataEntityList.getLast().getFileName()).isEqualTo("img_2.png");
+        assertThat(fileMetadataEntityList.get(0).getPath()).isEqualTo("feedback-images/" + newCreatedFeedbackId);
+        assertThat(fileMetadataEntityList.get(0).getFileName()).isEqualTo("img_1.png");
+        assertThat(fileMetadataEntityList.get(1).getPath()).isEqualTo("feedback-images/" + newCreatedFeedbackId);
+        assertThat(fileMetadataEntityList.get(1).getFileName()).isEqualTo("img_2.png");
 
 
         await().atMost(2, SECONDS).untilAsserted(() -> {
