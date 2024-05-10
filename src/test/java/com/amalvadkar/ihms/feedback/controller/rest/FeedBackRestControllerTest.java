@@ -1,41 +1,80 @@
 package com.amalvadkar.ihms.feedback.controller.rest;
 
 import com.amalvadkar.ihms.common.AbstractIT;
+import com.amalvadkar.ihms.common.entities.FileMetadataEntity;
+import com.amalvadkar.ihms.common.repositories.FileMetadataRepository;
 import com.icegreen.greenmail.util.GreenMailUtil;
 import io.restassured.http.ContentType;
+import io.restassured.internal.util.IOUtils;
+import io.restassured.response.Response;
 import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.jdbc.Sql;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 
 @Sql("/feedback-test-data.sql")
 class FeedBackRestControllerTest extends AbstractIT {
 
+    @Autowired
+    FileMetadataRepository fileMetadataRepo;
+
     @Test
-    void should_create_feedback_and_send_email_to_user_with_created_feedback_id_along_with_details() {
+    void should_create_feedback_and_send_email_to_user_with_created_feedback_id_along_with_details_and_save_files_meta_data_and_not_upload_to_cloud_in_test_env() throws IOException {
         String jsonData = """
                 {
                     "feedbackTitle" : "Ticket Order Issue",
                     "feedbackDescription" : "<p>I am facing ticket order issue</p>"
                 }
                 """;
-        given()
-                .contentType(ContentType.URLENC)
-                .header("userid" , 2)
+        ClassPathResource firstImg = new ClassPathResource("img_1.png");
+        InputStream inputStream1 = firstImg.getInputStream();
+        byte[] firstImgBytes = IOUtils.toByteArray(inputStream1);
+
+        ClassPathResource secondImg = new ClassPathResource("img_2.png");
+        InputStream inputStream2 = secondImg.getInputStream();
+        byte[] secondImgBytes = IOUtils.toByteArray(inputStream2);
+
+        Response response = given()
+                .contentType(ContentType.MULTIPART)
+                .header("userid", 2)
                 .formParam("jsondata", jsonData)
+                .multiPart("files", "img_1.png", firstImgBytes)
+                .multiPart("files", "img_2.png", secondImgBytes)
                 .when()
                 .post("/api/ihms/feedback/create-feedback")
                 .then()
-                .body("data.feedbackId", is(notNullValue()))
-                .body("success", is(true))
-                .body("code", is(200))
-                .body("message", is("Created Successfully"));
+                .extract()
+                .response();
+
+        boolean success = response.path("success");
+        assertThat(success).isTrue();
+
+        String message = response.path("message");
+        assertThat(message).isEqualTo("Created Successfully");
+
+        int code = response.path("code");
+        assertThat(code).isEqualTo(200);
+
+        String newCreatedFeedbackId = response.path("data.feedbackId");
+
+        List<FileMetadataEntity> fileMetadataEntityList = fileMetadataRepo.findAllByRecordId(newCreatedFeedbackId);
+
+        assertThat(fileMetadataEntityList).hasSize(2);
+        assertThat(fileMetadataEntityList.getFirst().getPath()).isEqualTo("feedback-images/" + newCreatedFeedbackId);
+        assertThat(fileMetadataEntityList.getFirst().getFileName()).isEqualTo("img_1.png");
+        assertThat(fileMetadataEntityList.getLast().getPath()).isEqualTo("feedback-images/" + newCreatedFeedbackId);
+        assertThat(fileMetadataEntityList.getLast().getFileName()).isEqualTo("img_2.png");
+
 
         await().atMost(2, SECONDS).untilAsserted(() -> {
             MimeMessage[] receivedMessages = greenMail.getReceivedMessages();

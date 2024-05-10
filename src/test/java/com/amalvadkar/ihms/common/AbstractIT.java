@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -19,6 +20,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @Tag("it")
 @Import({ContainersConfig.class , TestConfig.class})
 @ActiveProfiles("it")
+@Sql("/add_test_user_and_delete_all_users_except_system_user.sql")
 public abstract class AbstractIT {
 
     @RegisterExtension
