@@ -10,6 +10,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
 @Sql("/files-test-data.sql")
+@Sql("/add_test_user_and_delete_all_users_except_system_user.sql")
 class FilesRestControllerTest extends AbstractIT {
 
     @Test

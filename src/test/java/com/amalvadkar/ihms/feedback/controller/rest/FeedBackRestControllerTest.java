@@ -23,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
 @Sql("/feedback-test-data.sql")
+@Sql("/add_test_user_and_delete_all_users_except_system_user.sql")
 class FeedBackRestControllerTest extends AbstractIT {
 
     @Autowired
