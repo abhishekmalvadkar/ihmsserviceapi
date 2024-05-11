@@ -1,6 +1,7 @@
 package com.amalvadkar.ihms.common.controllers.rest;
 
 import com.amalvadkar.ihms.common.controllers.services.FilesService;
+import com.amalvadkar.ihms.common.models.request.FetchFilesRequest;
 import com.amalvadkar.ihms.common.models.request.ViewFileRequest;
 import com.amalvadkar.ihms.common.models.response.CustomResModel;
 import jakarta.validation.Valid;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class FilesRestController {
 
     private static final String ENDPOINT_VIEW_FILE = "/view-file";
+    public static final String ENDPOINT_FETCH_FILES = "/fetch-files";
 
     private final FilesService filesService;
 
@@ -24,5 +26,11 @@ public class FilesRestController {
     public ResponseEntity<CustomResModel> viewFile(@Valid @RequestBody ViewFileRequest viewFileRequest) {
         return ResponseEntity.ok(filesService.viewFile(viewFileRequest));
     }
+
+    @PostMapping(ENDPOINT_FETCH_FILES)
+    public ResponseEntity<CustomResModel> fetchFiles(@Valid @RequestBody FetchFilesRequest fetchFilesRequest){
+        return ResponseEntity.ok(filesService.fetchFiles(fetchFilesRequest.recordId()));
+    }
+
 
 }
