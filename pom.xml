@@ -83,11 +83,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.github.f4b6a3</groupId>
-			<artifactId>ulid-creator</artifactId>
-			<version>${ulid-creator.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
