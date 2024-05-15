@@ -12,7 +12,7 @@
       "hostType": "maven",
       "domainName": "maven.pkg.github.com",
       "username": "abhishekmalvadkar",
-      "password": "${{ secrets.GITHUB_TOKEN }}"
+      "password": "${{ secrets.RENOVATE_GITHUB_TOKEN }}"
     }
   ]
 }
