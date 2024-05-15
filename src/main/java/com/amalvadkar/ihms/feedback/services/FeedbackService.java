@@ -1,11 +1,11 @@
 package com.amalvadkar.ihms.feedback.services;
 
 import com.amalvadkar.ihms.ApplicationProperties;
+import com.amalvadkar.ihms.app.constants.AppConstants;
 import com.amalvadkar.ihms.common.entities.FeedBackEntity;
 import com.amalvadkar.ihms.common.entities.FileMetadataEntity;
 import com.amalvadkar.ihms.common.entities.UserEntity;
 import com.amalvadkar.ihms.common.enums.CategoryEnum;
-import com.amalvadkar.ihms.common.helpers.DataBucketHelper;
 import com.amalvadkar.ihms.common.helpers.JsonHelper;
 import com.amalvadkar.ihms.common.models.response.CustomResModel;
 import com.amalvadkar.ihms.common.repositories.FeedBackRepository;
@@ -15,6 +15,7 @@ import com.amalvadkar.ihms.common.utils.Sanitizer;
 import com.amalvadkar.ihms.email.dto.MailDTO;
 import com.amalvadkar.ihms.email.sender.EmailSender;
 import com.amalvadkar.ihms.feedback.models.request.CreateFeedbackReqModel;
+import com.amalvadkar.ihms.files.helpers.DataBucketHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,14 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.amalvadkar.ihms.common.utils.AppConstants.CREATED_SUCCESSFULLY_RESPONSE_MESSAGE;
-import static com.amalvadkar.ihms.common.utils.AppConstants.CREATE_FEEDBACK_SUCCESS_EMAIL_TEMPLATE_NAME;
-import static com.amalvadkar.ihms.common.utils.AppConstants.EMAIL_SUBJECT_FEEDBACK_ADDED_SUCCESSFULLY;
-import static com.amalvadkar.ihms.common.utils.AppConstants.FEEDBACK_DESCRIPTION;
-import static com.amalvadkar.ihms.common.utils.AppConstants.FEEDBACK_ID;
-import static com.amalvadkar.ihms.common.utils.AppConstants.FEEDBACK_STATUS;
-import static com.amalvadkar.ihms.common.utils.AppConstants.FEEDBACK_TITLE;
-import static com.amalvadkar.ihms.common.utils.AppConstants.USERNAME;
 import static org.apache.commons.lang3.ArrayUtils.isEmpty;
 
 @Service
@@ -55,7 +48,7 @@ public class FeedbackService {
         FeedBackEntity savedFeedbackEntity = saveFeedback(createFeedbackReqJson, userEntity);
         sendFeedbackAddedEmailWithDetails(userEntity, savedFeedbackEntity);
         processFiles(files, savedFeedbackEntity , userEntity);
-        return CustomResModel.success(Map.of(FEEDBACK_ID, savedFeedbackEntity.getId()), CREATED_SUCCESSFULLY_RESPONSE_MESSAGE);
+        return CustomResModel.success(Map.of(AppConstants.FEEDBACK_ID, savedFeedbackEntity.getId()), AppConstants.CREATED_SUCCESSFULLY_RESPONSE_MESSAGE);
     }
 
     private void processFiles(MultipartFile[] files, FeedBackEntity savedFeedbackEntity, UserEntity userEntity) {
@@ -104,14 +97,14 @@ public class FeedbackService {
 
     private void sendFeedbackAddedEmailWithDetails(UserEntity userEntity, FeedBackEntity feedBackEntity) {
         Map<String, Object> templateVariableNameToValueMap = Map.of(
-                USERNAME, userEntity.getName(),
-                FEEDBACK_ID, feedBackEntity.getId(),
-                FEEDBACK_TITLE, feedBackEntity.getTitle(),
-                FEEDBACK_DESCRIPTION, feedBackEntity.getDescription(),
-                FEEDBACK_STATUS, feedBackEntity.getStatus()
+                AppConstants.USERNAME, userEntity.getName(),
+                AppConstants.FEEDBACK_ID, feedBackEntity.getId(),
+                AppConstants.FEEDBACK_TITLE, feedBackEntity.getTitle(),
+                AppConstants.FEEDBACK_DESCRIPTION, feedBackEntity.getDescription(),
+                AppConstants.FEEDBACK_STATUS, feedBackEntity.getStatus()
         );
-        MailDTO mailDTO = new MailDTO(EMAIL_SUBJECT_FEEDBACK_ADDED_SUCCESSFULLY,
-                userEntity.getEmail(), templateVariableNameToValueMap, CREATE_FEEDBACK_SUCCESS_EMAIL_TEMPLATE_NAME);
+        MailDTO mailDTO = new MailDTO(AppConstants.EMAIL_SUBJECT_FEEDBACK_ADDED_SUCCESSFULLY,
+                userEntity.getEmail(), templateVariableNameToValueMap, AppConstants.CREATE_FEEDBACK_SUCCESS_EMAIL_TEMPLATE_NAME);
         emailSender.sendInAsync(mailDTO);
     }
 }

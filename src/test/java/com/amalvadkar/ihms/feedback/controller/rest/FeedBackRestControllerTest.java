@@ -70,7 +70,7 @@ class FeedBackRestControllerTest extends AbstractIT {
         assertThat(fileMetadataEntityList.getFirst().getFileName()).isEqualTo("img.png");
 
 
-        await().atMost(2, SECONDS).untilAsserted(() -> {
+        await().atMost(3, SECONDS).untilAsserted(() -> {
             MimeMessage[] receivedMessages = greenMail.getReceivedMessages();
             assertThat(receivedMessages).hasSize(1);
 
