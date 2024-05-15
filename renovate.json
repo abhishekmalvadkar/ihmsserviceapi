@@ -6,8 +6,7 @@
     {
       "hostType": "maven",
       "matchHost": "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon",
-      "username": "abhishekmalvadkar",
-      "password": "${{secrets.RENOVATE_GITHUB_TOKEN}}"
+      "token": "${{secrets.RENOVATE_GITHUB_TOKEN}}"
     }
   ]
 }
