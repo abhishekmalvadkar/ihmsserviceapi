@@ -2,6 +2,7 @@
   "extends": [
     "config:base"
   ],
+  "logLevel": "debug",
   "maven": {
     "registryUrls": [
       "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon"
