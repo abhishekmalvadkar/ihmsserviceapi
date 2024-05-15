@@ -1,4 +1,4 @@
-{
+th{
   "extends": [
     "config:base"
   ],
@@ -10,7 +10,7 @@
   "hostRules": [
     {
       "hostType": "maven",
-      "matchHost": "maven.pkg.github.com",
+      "matchHost": "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon",
       "username": "abhishekmalvadkar",
       "password": "${{secrets.RENOVATE_GITHUB_TOKEN}}"
     }
