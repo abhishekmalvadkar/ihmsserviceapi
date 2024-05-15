@@ -1,4 +1,4 @@
-th{
+{
   "extends": [
     "config:base"
   ],
