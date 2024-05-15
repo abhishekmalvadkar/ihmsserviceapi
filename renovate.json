@@ -2,7 +2,6 @@
   "extends": [
     "config:base"
   ],
-  "logLevel": "debug",
   "maven": {
     "registryUrls": [
       "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon"
@@ -11,7 +10,7 @@
   "hostRules": [
     {
       "hostType": "maven",
-      "domainName": "maven.pkg.github.com",
+      "matchHost": "maven.pkg.github.com",
       "username": "abhishekmalvadkar",
       "password": "${{secrets.RENOVATE_GITHUB_TOKEN}}"
     }
