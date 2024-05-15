@@ -1,12 +1,17 @@
 {
-  "extends": [
-    "config:base"
-  ],
-  "hostRules": [
+  "platform": "github",
+  "repositories": [
     {
-      "hostType": "maven",
-      "matchHost": "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon",
-      "token": "${{secrets.RENOVATE_GITHUB_TOKEN}}"
+      "platform": "maven",
+      "url": "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon",
+      "labels": ["maven"],
+      "schedule": ["every weekend"]
     }
-  ]
+  ],
+  "autodiscover": false,
+  "token": "${{RENOVATE_GITHUB_TOKEN}}",
+  "onboarding": true,
+  "semanticCommits": true,
+  "dependencyDashboard": true,
+  "assignees": ["abhishekmalvadkar"]
 }
