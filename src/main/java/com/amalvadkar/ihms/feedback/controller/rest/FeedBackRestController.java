@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import static com.amalvadkar.ihms.common.utils.AppConstants.FORM_DATA_JSON_DATA;
-import static com.amalvadkar.ihms.common.utils.AppConstants.REQUEST_HEADER_USER_ID;
+import static com.amalvadkar.ihms.app.constants.AppConstants.FORM_DATA_JSON_DATA;
+import static com.amalvadkar.ihms.app.constants.AppConstants.REQUEST_HEADER_USER_ID;
 
 @RestController
 @RequestMapping(value = "/api/ihms/feedback")

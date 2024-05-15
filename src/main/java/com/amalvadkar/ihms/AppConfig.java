@@ -18,10 +18,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import static com.amalvadkar.ihms.common.utils.AppConstants.CODE;
-import static com.amalvadkar.ihms.common.utils.AppConstants.HOLIDAY_STATUS;
-import static com.amalvadkar.ihms.holiday.enums.HolidayStatusCodeEnum.HG;
-import static com.amalvadkar.ihms.holiday.enums.HolidayStatusCodeEnum.UPC;
+import static com.amalvadkar.ihms.app.constants.AppConstants.CODE;
+import static com.amalvadkar.ihms.app.constants.AppConstants.HOLIDAY_STATUS;
 
 @Configuration
 @RequiredArgsConstructor
@@ -33,9 +31,9 @@ public class AppConfig {
     public HolidayStatusDTO hasGoneHolidayStatus(){
         return appProps.holidayStatusList()
                 .stream()
-                .filter(holidayStatusDTO -> holidayStatusDTO.code() == HG)
+                .filter(holidayStatusDTO -> holidayStatusDTO.code() == HolidayStatusCodeEnum.HG)
                 .findFirst()
-                .orElseThrow(() -> ResourceNotFoundException.from(HOLIDAY_STATUS, CODE, HG.name()));
+                .orElseThrow(() -> ResourceNotFoundException.from(HOLIDAY_STATUS, CODE, HolidayStatusCodeEnum.HG.name()));
     }
 
     @Bean(name = "upcomingHolidayStatus")
@@ -44,7 +42,7 @@ public class AppConfig {
                 .stream()
                 .filter(holidayStatusDTO -> holidayStatusDTO.code() == HolidayStatusCodeEnum.UPC)
                 .findFirst()
-                .orElseThrow(() -> ResourceNotFoundException.from(HOLIDAY_STATUS, CODE, UPC.name()));
+                .orElseThrow(() -> ResourceNotFoundException.from(HOLIDAY_STATUS, CODE, HolidayStatusCodeEnum.UPC.name()));
     }
 
     @Bean

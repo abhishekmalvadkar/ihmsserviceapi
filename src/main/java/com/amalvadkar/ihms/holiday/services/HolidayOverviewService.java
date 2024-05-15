@@ -17,9 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 
-import static com.amalvadkar.ihms.common.utils.AppConstants.COUNTRY_LIST;
-import static com.amalvadkar.ihms.common.utils.AppConstants.FETCHED_SUCCESSFULLY_RESPONSE_MESSAGE;
-import static com.amalvadkar.ihms.common.utils.AppConstants.HOLIDAY_STATUS_LIST;
+import static com.amalvadkar.ihms.app.constants.AppConstants.COUNTRY_LIST;
+import static com.amalvadkar.ihms.app.constants.AppConstants.FETCHED_SUCCESSFULLY_RESPONSE_MESSAGE;
+import static com.amalvadkar.ihms.app.constants.AppConstants.HOLIDAY_STATUS_LIST;
 import static java.util.Objects.isNull;
 
 @Service
