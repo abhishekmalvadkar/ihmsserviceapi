@@ -7,7 +7,6 @@
       "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon"
     ]
   },
-  "logLevel": "debug",
   "hostRules": [
     {
       "hostType": "maven",
