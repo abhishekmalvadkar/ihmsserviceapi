@@ -25,6 +25,9 @@ jobs:
 
       - name: Build with Maven
         run: ./mvnw --no-transfer-progress clean verify
+        env:
+         GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - if: ${{ github.ref == 'refs/heads/develop' }}
         name: Sonar Scan
