@@ -10,7 +10,5 @@
     "matchHost": "https://maven.pkg.github.com/abhishekmalvadkar/*",
     "token": "${{RENOVATE_GITHUB_TOKEN}}",
   },
-];
-    }
-    ]
+]
 }
