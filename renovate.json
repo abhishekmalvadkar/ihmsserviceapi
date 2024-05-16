@@ -1,17 +1,15 @@
 {
-  "platform": "github",
-  "repositories": [
-    {
-      "platform": "maven",
-      "url": "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon",
-      "labels": ["maven"],
-      "schedule": ["every weekend"]
-    }
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    "schedule:earlyMondays"
   ],
-  "autodiscover": false,
-  "token": "${{RENOVATE_GITHUB_TOKEN}}",
-  "onboarding": true,
-  "semanticCommits": true,
-  "dependencyDashboard": true,
-  "assignees": ["abhishekmalvadkar"]
+    "packageRules": [
+    {
+      "matchPackageNames": [
+        "com.amalvadkar:ihmsservicecommon"
+      ],
+      "enabled": false
+    }
+    ]
 }
