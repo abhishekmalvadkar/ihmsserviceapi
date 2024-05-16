@@ -24,11 +24,17 @@
 	</properties>
 
 	<repositories>
-          <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon</url>
-         </repository>
-        </repositories>
+  <repository>
+    <id>github</id>
+    <url>https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon</url>
+    <releases>
+      <enabled>true</enabled>
+    </releases>
+    <snapshots>
+      <enabled>true</enabled>
+    </snapshots>
+  </repository>
+</repositories>
 	
 	<dependencies>
 		<dependency>
