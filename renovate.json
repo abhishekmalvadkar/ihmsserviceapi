@@ -1,18 +1,7 @@
 {
-  "logLevel" : "debug",
-  "extends": [
-    "config:base"
-  ],
-  "packageRules": [
-    {
-      "packagePatterns": ["^com\\.amalvadkar"],
-      "registryUrls": ["https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon"],
-      "token": "${{secrets.RENOVATE_GITHUB_TOKEN}}"
-    }
-  ],
-  "maven": {
-    "enabled": true,
-    "fileMatch": ["^pom\\.xml$"],
-    "automerge": true
-  }
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:base",
+        "schedule:earlyMondays"
+    ]
 }
