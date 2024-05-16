@@ -20,21 +20,15 @@
 		<jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
 		<greenmail-junit5.version>2.0.1</greenmail-junit5.version>
 		<firebase-admin.version>9.2.0</firebase-admin.version>
-		<ihmsservicecommon.version>0.0.2</ihmsservicecommon.version>
+		<ihmsservicecommon.version>[0.0.)</ihmsservicecommon.version>
 	</properties>
 
 	<repositories>
-  <repository>
-    <id>github</id>
-    <url>https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon</url>
-    <releases>
-      <enabled>true</enabled>
-    </releases>
-    <snapshots>
-      <enabled>true</enabled>
-    </snapshots>
-  </repository>
-</repositories>
+          <repository>
+           <id>github</id>
+           <url>https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon</url> 
+         </repository>
+        </repositories>
 	
 	<dependencies>
 		<dependency>
