@@ -6,10 +6,10 @@
   ],
     "packageRules": [
     {
-      "matchPackageNames": [
-        "com.amalvadkar:ihmsservicecommon"
+      "matchPackagePatterns": [
+        "^com.amalvadkar:"
       ],
-      "enabled": false
+      "ignoreLookupWarnings": false
     }
     ]
 }
