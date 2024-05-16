@@ -4,10 +4,18 @@
     "config:base",
     "schedule:earlyMondays"
   ],
+"packageRules": [
+    {
+      "matchDatasources": ["maven"],
+      "registryUrls": [
+        "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon"
+      ]
+    }
+  ]
     "hostRules": [
   {
     "hostType": "maven",
-    "matchHost": "https://maven.pkg.github.com/abhishekmalvadkar/*",
+    "matchHost": "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon*",
     "token": "${{secrets.RENOVATE_GITHUB_TOKEN}}",
   },
 ]
