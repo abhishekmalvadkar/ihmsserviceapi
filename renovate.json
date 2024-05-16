@@ -1,32 +1,7 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base",
-    "schedule:earlyMondays"
-  ],
-  "packageRules": [
-    {
-      "matchManagers": ["maven"],
-      "matchPackagePrefixes": ["com.amalvadkar"],
-      "registryUrls": [
-        "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon/"
-      ],
-      "schedule": ["at any time"]
-    },
-    {
-      "matchUpdateTypes": ["minor", "patch"],
-      "matchCurrentVersion": "!/^0/",
-      "automerge": true
-    }
-  ],
-  "schedule": ["before 5am every weekday"],
-  "prHourlyLimit": 0,
-  "hostRules": [
-    {
-      "hostType": "maven",
-      "matchHost": "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon/",
-      "username": "abhishekmalvadkar",
-      "password" : "${{secretes.RENOVATE_GITHUB_TOKEN}}"
-    }
-  ]
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:base",
+        "schedule:earlyMondays"
+    ]
 }
