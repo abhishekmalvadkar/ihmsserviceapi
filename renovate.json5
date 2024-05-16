@@ -4,19 +4,29 @@
     "config:base",
     "schedule:earlyMondays"
   ],
-"packageRules": [
+  "packageRules": [
     {
-      "matchDatasources": ["maven"],
+      "matchManagers": ["maven"],
+      "matchPackagePrefixes": ["com.amalvadkar"],
       "registryUrls": [
-        "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon"
-      ]
+        "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon/"
+      ],
+      "schedule": ["at any time"]
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true
     }
   ],
-    "hostRules": [
-  {
-    "hostType": "maven",
-    "matchHost": "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon*",
-    "token": "${{secrets.RENOVATE_GITHUB_TOKEN}}",
-  },
-]
+  "schedule": ["before 5am every weekday"],
+  "prHourlyLimit": 0,
+  "hostRules": [
+    {
+      "hostType": "maven",
+      "matchHost": "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon/",
+      "username": "abhishekmalvadkar",
+      "password" : "${{secretes.RENOVATE_GITHUB_TOKEN}}"
+    }
+  ]
 }
