@@ -10,7 +10,7 @@
       "registryUrls": [
         "https://maven.pkg.github.com/abhishekmalvadkar/ihmsservicecommon"
       ]
-    }
+    },
   ]
     "hostRules": [
   {
