@@ -16,6 +16,6 @@ insert into holiday_overview(id, title, holiday_date, is_optional , country_id ,
 -- insert-holidays-for-USA
 insert into holiday_overview(id, title, holiday_date, is_optional , country_id , created_by, created_on) values
 (3, "New Year's Day", '2024-01-01', 'No', 2 , 1 , utc_timestamp()),
-(4, 'Memorial Day', '2024-05-27', 'No', 2 , 1 , utc_timestamp());
+(4, 'Memorial Day', '2090-05-27', 'No', 2 , 1 , utc_timestamp());
 
 SET FOREIGN_KEY_CHECKS = 1;
