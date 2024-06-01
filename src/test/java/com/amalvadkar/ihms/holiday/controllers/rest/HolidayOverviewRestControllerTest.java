@@ -97,7 +97,7 @@ class HolidayOverviewRestControllerTest extends AbstractIT {
                 .body("data.content[0].holidayStatus", is("Has Gone"))
                 .body("data.content[0].day", is("Monday"))
                 .body("data.content[1].holidayId", is(4))
-                .body("data.content[1].holidayDate", is("27 May 2024"))
+                .body("data.content[1].holidayDate", is("27 May 2090"))
                 .body("data.content[1].holidayTitle", is("Memorial Day"))
                 .body("data.content[1].isOptional", is("No"))
                 .body("data.content[1].country", is("United States of America"))
