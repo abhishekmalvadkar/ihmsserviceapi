@@ -103,7 +103,7 @@ class HolidayOverviewRestControllerTest extends AbstractIT {
                 .body("data.content[1].country", is("United States of America"))
                 .body("data.content[1].holidayStatusColor", is("#808080"))
                 .body("data.content[1].holidayStatus", is("Upcoming"))
-                .body("data.content[1].day", is("Monday"))
+                .body("data.content[1].day", is("Saturday"))
                 .body("success", is(true))
                 .body("code", is(200))
                 .body("message", is("Fetched Successfully"));
