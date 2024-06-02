@@ -1,7 +1,4 @@
-name: Maven Build Publish Docker Image
-
-env:
-  APP_NAME: ihmsserviceapi
+name: Dev CI
 
 on:
   push:
@@ -34,38 +31,3 @@ jobs:
       - if: ${{ success() && github.ref == 'refs/heads/develop' }}
         name: Sonar Scan
         run: ./mvnw --no-transfer-progress initialize sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }}
-
-      - if: ${{ success() &&  ( github.ref == 'refs/heads/develop' 
-             || github.ref == 'refs/heads/qa' 
-             || github.ref == 'refs/heads/release' 
-             || github.ref == 'refs/heads/master' ) }}
-        name: 'Login to GitHub Container Registry'
-        uses: docker/login-action@v3
-        with:
-            registry: ghcr.io
-            username: ${{github.actor}}
-            password: ${{secrets.GITHUB_TOKEN}}
-            
-      - if: ${{ success() && github.ref == 'refs/heads/develop' }}
-        name: Build and upload dev docker image to GHCR
-        run: |
-           docker build . --tag ghcr.io/${{ github.actor }}/dev-${{ env.APP_NAME }}:latest
-           docker push ghcr.io/${{ github.actor }}/dev-${{ env.APP_NAME }}:latest
-
-      - if: ${{ success() && github.ref == 'refs/heads/qa' }}
-        name: Build and upload qa docker image to GHCR
-        run: |
-           docker build . --tag ghcr.io/${{ github.actor }}/qa-${{ env.APP_NAME }}:latest
-           docker push ghcr.io/${{ github.actor }}/qa-${{ env.APP_NAME }}:latest
-
-      - if: ${{ success() && github.ref == 'refs/heads/release' }}
-        name: Build and upload release docker image to GHCR
-        run: |
-           docker build . --tag ghcr.io/${{ github.actor }}/staging-${{ env.APP_NAME }}:latest
-           docker push ghcr.io/${{ github.actor }}/staging-${{ env.APP_NAME }}:latest
-
-      - if: ${{ success() && github.ref == 'refs/heads/master' }}
-        name: Build and upload prod docker image to GHCR
-        run: |
-           docker build . --tag ghcr.io/${{ github.actor }}/prod-${{ env.APP_NAME }}:latest
-           docker push ghcr.io/${{ github.actor }}/prod-${{ env.APP_NAME }}:latest
