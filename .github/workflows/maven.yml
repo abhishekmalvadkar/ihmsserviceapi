@@ -33,8 +33,8 @@ jobs:
         run: ./mvnw --no-transfer-progress initialize sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
       - if: ${{ success() && github.ref == 'refs/heads/develop' }}
-        name: Upload dev image to GHCR
+        name: Upload dev image to GHCR if current branch is develop
         run: |
-           docker login --username ${{ secrets.GITHUB_ACTOR }} --password ${{ secrets.GHCR_TOKEN}} ghcr.io
+           docker login --username ${{ secrets.GITHUB_ACTOR }} --password ${{ secrets.GITHUB_TOKEN }} ghcr.io
            docker build . --tag ghcr.io/${{ secrets.GITHUB_ACTOR }}/dev-${{ env.APP_NAME }}:latest
            docker push ghcr.io/${{ secrets.GITHUB_ACTOR }}/dev-${{ env.APP_NAME }}:latest
