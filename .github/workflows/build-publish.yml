@@ -50,7 +50,7 @@ jobs:
              || github.ref == 'refs/heads/qa' 
              || github.ref == 'refs/heads/staging' 
              || github.ref == 'refs/heads/master' ) }}
-        name: Build and upload docker image to GHCR for branch ${{ githb.ref }}
+        name: Build and upload docker image to GHCR for branch ${{ github.ref }}
         run: |
            docker build . --tag ghcr.io/${{ github.actor }}/dev-${{ env.APP_NAME }}:latest
            docker push ghcr.io/${{ github.actor }}/${{ github.ref }}-${{ env.APP_NAME }}:latest
