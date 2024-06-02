@@ -35,9 +35,19 @@ jobs:
         name: Sonar Scan
         run: ./mvnw --no-transfer-progress initialize sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
+      - if: ${{ success() &&  ( github.ref == 'refs/heads/develop' 
+             || github.ref == 'refs/heads/qa' 
+             || github.ref == 'refs/heads/release' 
+             || github.ref == 'refs/heads/master' ) }}
+        name: 'Login to GitHub Container Registry'
+        uses: docker/login-action@v1
+        with:
+            registry: ghcr.io
+            username: ${{github.actor}}
+            password: ${{secrets.GITHUB_TOKEN}}
+
       - if: ${{ success() && github.ref == 'refs/heads/develop' }}
         name: Upload dev image to GHCR if current branch is develop
         run: |
-           docker login --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} ghcr.io
            docker build . --tag ghcr.io/${{ github.actor }}/dev-${{ env.APP_NAME }}:latest
            docker push ghcr.io/${{ github.actor }}/dev-${{ env.APP_NAME }}:latest
