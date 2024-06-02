@@ -1,4 +1,17 @@
 spring:
+  mail:
+    host: ${EMAIL_HOST}
+    username: ${EMAIL_ID}
+    password: ${APP_PASSWORD}
+    port: ${EMAIL_PORT}
+    protocol: ${EMAIL_PROTOCOL}
+    test-connection: false
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   application:
     name: ihmsserviceapi
   jpa:
@@ -6,5 +19,18 @@ spring:
   liquibase:
     change-log: classpath:/db/changelog/changelog-master.xml
     enabled: true
+
 server:
   port: 9091
+
+ihms:
+  holiday-status-list:
+    - title: "Upcoming"
+      colorCode: "#808080"
+      code: UPC
+    - title: "Has Gone"
+      colorCode: "#FF0000"
+      code: HG
+  bucket-name: ${BUCKET_NAME}
+  signedUrlExpiryTimeInSec: 3600
+  feedbackImagesBasePath: feedback-images/

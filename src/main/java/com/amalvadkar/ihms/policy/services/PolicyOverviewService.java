@@ -1,5 +1,6 @@
 package com.amalvadkar.ihms.policy.services;
 
+import com.amalvadkar.ihms.app.constants.AppConstants;
 import com.amalvadkar.ihms.common.entities.PolicyCategoryEntity;
 import com.amalvadkar.ihms.common.entities.PolicyDocumentEntity;
 import com.amalvadkar.ihms.common.models.response.CustomResModel;
@@ -16,9 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.amalvadkar.ihms.common.utils.AppConstants.CREATED_SUCCESSFULLY_RESPONSE_MESSAGE;
-import static com.amalvadkar.ihms.common.utils.AppConstants.FETCHED_SUCCESSFULLY_RESPONSE_MESSAGE;
-
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -31,7 +29,7 @@ public class PolicyOverviewService {
 
     public CustomResModel fetchPolicyOverview() {
         List<PolicyOverviewResModel> policyOverviewResModelList = preparePolicyOverviewResModelList();
-        return CustomResModel.success(policyOverviewResModelList, FETCHED_SUCCESSFULLY_RESPONSE_MESSAGE);
+        return CustomResModel.success(policyOverviewResModelList, AppConstants.FETCHED_SUCCESSFULLY_RESPONSE_MESSAGE);
     }
 
     private List<PolicyOverviewResModel> preparePolicyOverviewResModelList() {
@@ -71,6 +69,6 @@ public class PolicyOverviewService {
         PolicyDocumentEntity policyDocumentEntity = policyDocumentRepo.findByIdOrThrow(policyDocumentId);
         policyDocumentViewCountHelper.increaseViewCountInAsync(policyDocumentId);
         log.debug("viewPolicyDocument() >>>>>>>");
-        return CustomResModel.success(policyDocumentEntity.getPath() , CREATED_SUCCESSFULLY_RESPONSE_MESSAGE);
+        return CustomResModel.success(policyDocumentEntity.getPath() , AppConstants.CREATED_SUCCESSFULLY_RESPONSE_MESSAGE);
     }
 }
