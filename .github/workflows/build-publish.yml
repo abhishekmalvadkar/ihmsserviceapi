@@ -24,7 +24,7 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: 'maven'
-
+          
       - name: Build with Maven
         run: ./mvnw --no-transfer-progress clean verify
         env:
@@ -45,12 +45,27 @@ jobs:
             registry: ghcr.io
             username: ${{github.actor}}
             password: ${{secrets.GITHUB_TOKEN}}
-
-      - if: ${{ success() &&  ( github.ref == 'refs/heads/develop' 
-             || github.ref == 'refs/heads/qa' 
-             || github.ref == 'refs/heads/release' 
-             || github.ref == 'refs/heads/master' ) }}
-        name: Build and upload docker image to GHCR for branch ${GITHUB_REF##*/}
+            
+      - if: ${{ success() && github.ref == 'refs/heads/develop' }}
+        name: Build and upload dev docker image to GHCR
         run: |
            docker build . --tag ghcr.io/${{ github.actor }}/dev-${{ env.APP_NAME }}:latest
-           docker push ghcr.io/${{ github.actor }}/${{ github.ref }}-${{ env.APP_NAME }}:latest
+           docker push ghcr.io/${{ github.actor }}/dev-${{ env.APP_NAME }}:latest
+
+      - if: ${{ success() && github.ref == 'refs/heads/qa' }}
+        name: Build and upload qa docker image to GHCR
+        run: |
+           docker build . --tag ghcr.io/${{ github.actor }}/qa-${{ env.APP_NAME }}:latest
+           docker push ghcr.io/${{ github.actor }}/qa-${{ env.APP_NAME }}:latest
+
+      - if: ${{ success() && github.ref == 'refs/heads/release' }}
+        name: Build and upload release docker image to GHCR
+        run: |
+           docker build . --tag ghcr.io/${{ github.actor }}/staging-${{ env.APP_NAME }}:latest
+           docker push ghcr.io/${{ github.actor }}/staging-${{ env.APP_NAME }}:latest
+
+      - if: ${{ success() && github.ref == 'refs/heads/master' }}
+        name: Build and upload prod docker image to GHCR
+        run: |
+           docker build . --tag ghcr.io/${{ github.actor }}/prod-${{ env.APP_NAME }}:latest
+           docker push ghcr.io/${{ github.actor }}/prod-${{ env.APP_NAME }}:latest
