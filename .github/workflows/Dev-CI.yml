@@ -43,17 +43,16 @@ jobs:
           snyk code test --sarif > snyk-code.sarif
 
       - if: ${{ github.ref == 'refs/heads/develop' }}
-        name: Prepare Snyk Code Test Results Json
-        continue-on-error: true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: |
-          snyk code test --json > snyk-report.json
+        name: Snyk Code Test Result Prepare
+        run: snyk code test --json > snyk-report.json && \
+             npx snyk-to-html ./snyk-report.json > snyk-report.html
 
       - if: ${{ github.ref == 'refs/heads/develop' }}
-        name: Send Snyk Code Test Results
-        run: |
-          curl -X POST -F "file=@snyk-report.json" -H "Authorization: token ${{ secrets.SNYK_TOKEN }}" https://snyk.io/api/v1/orgs/${{ secrets.SNYK_ORG_ID }}/integrations/${{ secrets.SNYK_IG_ID }}/issues
+        name: Save Report as Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: snyk-report
+          path: snyk-report.html
 
       - if: ${{ github.ref == 'refs/heads/develop' }} 
         name: Upload result to GitHub Code Scanning
