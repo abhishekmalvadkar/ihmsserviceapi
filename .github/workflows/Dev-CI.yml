@@ -41,7 +41,9 @@ jobs:
         name: Run Snyk Test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk test --json > snyk-results.json
+        run: |
+          snyk test --json > snyk-results.json
+          snyk monitor
 
       - if: ${{ github.ref == 'refs/heads/develop' }}
         name: Convert Snyk results to SARIF
