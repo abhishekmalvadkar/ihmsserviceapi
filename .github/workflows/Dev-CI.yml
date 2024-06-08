@@ -38,4 +38,9 @@ jobs:
       - name: Run Snyk to check for vulnerabilities
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk test
+        run: snyk test --json-file-output=snyk_report.json
+
+      - name: Monitor project and send results to Snyk
+        env:
+           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: snyk monitor
