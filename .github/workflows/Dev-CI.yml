@@ -35,7 +35,6 @@ jobs:
 
       - if: ${{ github.ref == 'refs/heads/develop' }}
         name: Run Snyk Test
-        continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
@@ -44,9 +43,9 @@ jobs:
 
       - if: ${{ github.ref == 'refs/heads/develop' }}
         name: Upload snyk report to snyk
-        run: |
-          snyk auth ${{ secrets.SNYK_TOKEN }}
-          snyk monitor
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: snyk monitor
 
       - if: ${{ github.ref == 'refs/heads/develop' }} 
         name: Upload result to GitHub Code Scanning
