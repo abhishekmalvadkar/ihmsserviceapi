@@ -42,7 +42,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
-          snyk test --json > snyk-results.json
+          snyk code test --json > snyk-results.json
           snyk monitor
 
       - if: ${{ github.ref == 'refs/heads/develop' }}
