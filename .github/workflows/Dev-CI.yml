@@ -48,7 +48,8 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: snyk monitor
 
-      - name: Upload result to GitHub Code Scanning
+      - if: ${{ github.ref == 'refs/heads/develop' }} 
+        name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: snyk-code.sarif
