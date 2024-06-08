@@ -53,7 +53,7 @@ jobs:
       - if: ${{ github.ref == 'refs/heads/develop' }}
         name: Send Snyk Code Test Results
         run: |
-          curl -X POST -F "file=@snyk-report.json" -H "Authorization: token ${{ secrets.SNYK_TOKEN }}" https://snyk.io/api/v1/code-test-results
+          curl -X POST -F "file=@snyk-report.json" -H "Authorization: token ${{ secrets.SNYK_TOKEN }}" https://snyk.io/api/v1/orgs/${{ secrets.SNYK_ORG_ID }}/integrations/${{ secrets.SNYK_IG_ID }}/issues
 
       - if: ${{ github.ref == 'refs/heads/develop' }} 
         name: Upload result to GitHub Code Scanning
