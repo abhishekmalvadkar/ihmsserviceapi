@@ -41,6 +41,9 @@ jobs:
         run: |
           npm install -g snyk
           snyk code test
-          snyk monitor
+
+      - if: ${{ github.ref == 'refs/heads/develop' }}
+        name: Upload snyk report to snyk
+        run: snyk monitor
 
   
