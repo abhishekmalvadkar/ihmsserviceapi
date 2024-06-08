@@ -79,14 +79,5 @@ jobs:
           name: snyk-report
           path: snyk_report.json
 
-      - name: Run Snyk monitor and send results to Snyk
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk monitor --all-projects --json-file-output=snyk_monitor_report.json
 
-      - name: Upload Snyk monitor report artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: snyk-monitor-report
-          path: snyk_monitor_report.json
 
