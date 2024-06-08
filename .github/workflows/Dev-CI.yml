@@ -32,24 +32,6 @@ jobs:
       - if: ${{ success() && github.ref == 'refs/heads/develop' }}
         name: Sonar Scan
         run: ./mvnw --no-transfer-progress initialize sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }}
-        
-      - name: Install Snyk CLI and snyk-to-sarif
-        run: |
-          npm install -g snyk
-          npm install -g snyk-to-sarif
-
-      - name: Run Snyk Test
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk test --json > snyk-results.json
-
-      - name: Convert Snyk results to SARIF
-        run: snyk-to-sarif -i snyk-results.json -o snyk-results.sarif
-
-      - name: Upload Snyk results to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: snyk-results.sarif
       
       
 
