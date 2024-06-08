@@ -8,7 +8,7 @@ jobs:
   snyk:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Build the Docker image
       run: docker build . --tag ghcr.io/${{ github.actor }}/dev-${{ env.APP_NAME }}:latest
     - name: Run Snyk to check Docker image for vulnerabilities
