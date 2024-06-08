@@ -10,6 +10,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableConfigurationProperties(ApplicationProperties.class)
 public class Application {
 	public static void main(String[] args) {
+		String username = "admin";
+		String password = "test";
+		System.out.println(password);
 		SpringApplication.run(Application.class, args);
 	}
 }
