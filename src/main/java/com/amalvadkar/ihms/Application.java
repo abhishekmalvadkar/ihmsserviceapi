@@ -15,4 +15,10 @@ public class Application {
 		System.out.println(password);
 		SpringApplication.run(Application.class, args);
 	}
+
+	public String random() {
+        // Insecure random number generation
+        Random random = new Random();
+        return "Random number: " + random.nextInt();
+	}
 }
