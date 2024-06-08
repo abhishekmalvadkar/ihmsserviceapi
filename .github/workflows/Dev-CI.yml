@@ -49,7 +49,7 @@ jobs:
 
       - if: ${{ github.ref == 'refs/heads/develop' }}
         name: Save Report as Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: snyk-report
           path: snyk-report.html
