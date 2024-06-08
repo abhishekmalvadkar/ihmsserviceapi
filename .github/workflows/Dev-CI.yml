@@ -31,16 +31,60 @@ jobs:
       - if: ${{ success() && github.ref == 'refs/heads/develop' }}
         name: Sonar Scan
         run: ./mvnw --no-transfer-progress initialize sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+       
+
+
+  snyk:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Cache Snyk CLI
+        uses: actions/cache@v3
+        with:
+          path: ~/.snyk
+          key: ${{ runner.os }}-snyk-cli-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-snyk-cli-
 
       - name: Install Snyk CLI
         run: npm install -g snyk
 
-      - name: Run Snyk to check for vulnerabilities
+      - name: Run Snyk test and generate report
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk test --json-file-output=snyk_report.json
+        run: snyk test --all-projects --json > snyk_report.json
 
-      - name: Monitor project and send results to Snyk
+      - name: Upload Snyk report artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: snyk-report
+          path: snyk_report.json
+
+      - name: Run Snyk monitor and send results to Snyk
         env:
-           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk monitor --json-file-output=snyk_report.json
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: snyk monitor --all-projects --json-file-output=snyk_monitor_report.json
+
+      - name: Upload Snyk monitor report artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: snyk-monitor-report
+          path: snyk_monitor_report.json
+
