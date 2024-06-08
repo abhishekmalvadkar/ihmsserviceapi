@@ -34,7 +34,7 @@ jobs:
         run: ./mvnw --no-transfer-progress initialize sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
       - if: ${{ github.ref == 'refs/heads/develop' }}
-        name: Run Snyk Test
+        name: Run Snyk Code Test
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -43,21 +43,10 @@ jobs:
           snyk code test --sarif > snyk-code.sarif
 
       - if: ${{ github.ref == 'refs/heads/develop' }}
-        name: Snyk Code Test Result Prepare
-        continue-on-error: true
-        run: snyk code test --json > snyk-report.json
-
-      - if: ${{ github.ref == 'refs/heads/develop' }}
-        name: Convert to html report
-        continue-on-error: true
-        run: npx snyk-to-html ./snyk-report.json > snyk-report.html
-
-      - if: ${{ github.ref == 'refs/heads/develop' }}
-        name: Save Report as Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: snyk-report
-          path: snyk-report.html
+        name: Upload result to snyk
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: snyk monitor
 
       - if: ${{ github.ref == 'refs/heads/develop' }} 
         name: Upload result to GitHub Code Scanning
