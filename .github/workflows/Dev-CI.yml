@@ -44,6 +44,8 @@ jobs:
 
       - if: ${{ github.ref == 'refs/heads/develop' }}
         name: Run Snyk Monitor
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: snyk monitor --all-projects
 
       - if: ${{ github.ref == 'refs/heads/develop' }} 
