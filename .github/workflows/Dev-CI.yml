@@ -32,22 +32,10 @@ jobs:
         name: Sonar Scan
         run: ./mvnw --no-transfer-progress initialize sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven@master
-        with:
-         args: test --json-file-output=snyk_report.json
         env:
-         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-      - name: Upload Snyk report as artifact
-        uses: actions/upload-artifact@v2
-        with:
-         name: snyk-report
-         path: snyk_report.json
-
-      - name: Upload Snyk result as comment on PR
-        if: github.event_name == 'pull_request'
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          path: snyk_report.json
-          header: "Snyk Security Report"
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: snyk test
