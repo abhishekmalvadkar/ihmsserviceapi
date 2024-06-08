@@ -43,4 +43,4 @@ jobs:
       - name: Monitor project and send results to Snyk
         env:
            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk monitor
+        run: snyk monitor --json-file-output=snyk_report.json
