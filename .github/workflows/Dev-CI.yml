@@ -32,29 +32,14 @@ jobs:
       - if: ${{ success() && github.ref == 'refs/heads/develop' }}
         name: Sonar Scan
         run: ./mvnw --no-transfer-progress initialize sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }}
-      
-      - if: ${{ github.ref == 'refs/heads/develop' }}
-        name: Install Snyk CLI
-        run: npm install -g snyk
 
       - if: ${{ github.ref == 'refs/heads/develop' }}
         name: Run Snyk Test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
-          snyk code test --json > snyk-results.json
+          npm install -g snyk
+          snyk code test
           snyk monitor
-
-      - if: ${{ github.ref == 'refs/heads/develop' }}
-        name: Convert Snyk results to SARIF
-        run: |
-          npm install -g snyk-to-sarif
-          snyk-to-sarif -i snyk-results.json -o snyk-results.sarif
-
-      - if: ${{ github.ref == 'refs/heads/develop' }}
-        name: Upload Snyk results to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: snyk-results.sarif
 
   
