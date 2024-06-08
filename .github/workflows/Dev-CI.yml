@@ -32,8 +32,10 @@ jobs:
         name: Sonar Scan
         run: ./mvnw --no-transfer-progress initialize sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }}
         
-      - name: Install Snyk CLI
-        run: npm install -g snyk
+      - name: Install Snyk CLI and snyk-to-sarif
+        run: |
+          npm install -g snyk
+          npm install -g snyk-to-sarif
 
       - name: Run Snyk Test
         env:
