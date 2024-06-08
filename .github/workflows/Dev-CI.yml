@@ -47,7 +47,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
-          snyk code test --json > snyk-report.json && curl -X POST -F "json=@snyk-report.json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://snyk.io/api/v1/report-upload
+          snyk code test --json > snyk-report.json && curl -X POST -F "json=@snyk-report.json" -H "Authorization: token ${{ secrets.SNYK_TOKEN }}" https://snyk.io/api/v1/report-upload
 
       - if: ${{ github.ref == 'refs/heads/develop' }} 
         name: Upload result to GitHub Code Scanning
