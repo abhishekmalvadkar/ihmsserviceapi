@@ -40,18 +40,11 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
           npm install -g snyk
-          snyk code test --sarif > snyk-code.sarif --json > snyk_code_test_results.json
+          snyk code test --sarif > snyk-code.sarif
 
       - if: ${{ github.ref == 'refs/heads/develop' }}
         name: Run Snyk Monitor
-        run: snyk monitor --json --all-projects --file=snyk_code_test_results.json > snyk_monitor_results.json
-
-      - if: ${{ github.ref == 'refs/heads/develop' }}
-        name: Upload Snyk Monitor Results
-        uses: actions/upload-artifact@v2
-        with:
-          name: snyk_monitor_results
-          path: snyk_monitor_results.json
+        run: snyk monitor --all-projects
 
       - if: ${{ github.ref == 'refs/heads/develop' }} 
         name: Upload result to GitHub Code Scanning
