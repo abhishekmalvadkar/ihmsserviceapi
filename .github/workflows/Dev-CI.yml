@@ -34,5 +34,7 @@ jobs:
 
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven@master
+        with:
+         args: test
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
