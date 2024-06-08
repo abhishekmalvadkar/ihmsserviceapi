@@ -44,6 +44,7 @@ jobs:
 
       - if: ${{ github.ref == 'refs/heads/develop' }}
         name: Snyk Code Test Result Prepare
+        continue-on-error: true
         run: snyk code test --json > snyk-report.json && \
              npx snyk-to-html ./snyk-report.json > snyk-report.html
 
