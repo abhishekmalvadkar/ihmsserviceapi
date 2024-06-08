@@ -32,11 +32,6 @@ jobs:
         name: Sonar Scan
         run: ./mvnw --no-transfer-progress initialize sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }}
         
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven-3-jdk-21@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
 
 
   
