@@ -13,6 +13,11 @@ jobs:
       packages: write
       security-events: write
 
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'java' ]
+
     steps:
       - uses: actions/checkout@v4
 
@@ -22,6 +27,12 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: 'maven'
+
+      - if: ${{ github.ref == 'refs/heads/develop' }} 
+        name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+         languages: ${{ matrix.language }}
           
       - name: Build with Maven
         run: ./mvnw --no-transfer-progress clean verify
@@ -33,6 +44,10 @@ jobs:
         name: Sonar Scan
         run: ./mvnw --no-transfer-progress initialize sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
+      - if: ${{ github.ref == 'refs/heads/develop' }} 
+        name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2     
+      
       - if: ${{ github.ref == 'refs/heads/develop' }}
         name: Run Snyk Code Test
         continue-on-error: true
