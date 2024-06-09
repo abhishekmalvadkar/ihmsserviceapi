@@ -8,13 +8,16 @@ import com.amalvadkar.ihms.common.entities.UserEntity;
 import com.amalvadkar.ihms.common.enums.CategoryEnum;
 import com.amalvadkar.ihms.common.helpers.JsonHelper;
 import com.amalvadkar.ihms.common.models.response.CustomResModel;
-import com.amalvadkar.ihms.common.repositories.FeedBackRepository;
+import com.amalvadkar.ihms.common.repositories.FeedbackRepository;
 import com.amalvadkar.ihms.common.repositories.FileMetadataRepository;
 import com.amalvadkar.ihms.common.repositories.UserRepository;
 import com.amalvadkar.ihms.common.utils.Sanitizer;
 import com.amalvadkar.ihms.email.dto.MailDTO;
 import com.amalvadkar.ihms.email.sender.EmailSender;
+import com.amalvadkar.ihms.feedback.mapper.FeedbackMapper;
+import com.amalvadkar.ihms.feedback.models.request.CheckFeedbackStatusReqModel;
 import com.amalvadkar.ihms.feedback.models.request.CreateFeedbackReqModel;
+import com.amalvadkar.ihms.feedback.models.response.FeedbackStatusResponse;
 import com.amalvadkar.ihms.files.helpers.DataBucketHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.amalvadkar.ihms.app.constants.AppConstants.FETCHED_SUCCESSFULLY_RESPONSE_MESSAGE;
+import static com.amalvadkar.ihms.app.constants.AppConstants.NO_DATA_FOUND_MSG;
 import static org.apache.commons.lang3.ArrayUtils.isEmpty;
 
 @Service
@@ -34,13 +39,14 @@ import static org.apache.commons.lang3.ArrayUtils.isEmpty;
 @Slf4j
 public class FeedbackService {
 
-    private final FeedBackRepository feedBackRepo;
+    private final FeedbackRepository feedBackRepo;
     private final JsonHelper jsonHelper;
     private final UserRepository userRepo;
     private final EmailSender emailSender;
     private final ApplicationProperties appProps;
     private final DataBucketHelper dataBucketHelper;
     private final FileMetadataRepository fileMetadataRepo;
+    private final FeedbackMapper feedBackMapper;
 
     @Transactional
     public CustomResModel createFeedback(String createFeedbackReqJson, MultipartFile[] files, Long loggedInUserId) {
@@ -50,6 +56,18 @@ public class FeedbackService {
         processFiles(files, savedFeedbackEntity , userEntity);
         return CustomResModel.success(Map.of(AppConstants.FEEDBACK_ID, savedFeedbackEntity.getId()), AppConstants.CREATED_SUCCESSFULLY_RESPONSE_MESSAGE);
     }
+
+    public CustomResModel checkFeedBackStatus(CheckFeedbackStatusReqModel checkFeedBackStatusReqModel){
+        return feedBackRepo.findFeedbackByFeedbackId(checkFeedBackStatusReqModel.feedbackId())
+                .map(this::prepareCheckFeedbackResModel)
+                .orElseGet(() -> CustomResModel.success(null , NO_DATA_FOUND_MSG));
+    }
+
+    private CustomResModel prepareCheckFeedbackResModel(FeedBackEntity feedBackEntity) {
+        FeedbackStatusResponse feedBackStatusModel = feedBackMapper.toFeedBackStatusModel(feedBackEntity);
+        return CustomResModel.success(feedBackStatusModel, FETCHED_SUCCESSFULLY_RESPONSE_MESSAGE);
+    }
+
 
     private void processFiles(MultipartFile[] files, FeedBackEntity savedFeedbackEntity, UserEntity userEntity) {
         if (isEmpty(files)) {

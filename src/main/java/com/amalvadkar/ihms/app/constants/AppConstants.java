@@ -19,6 +19,7 @@ public class AppConstants {
     public static final String CREATE_FEEDBACK_SUCCESS_EMAIL_TEMPLATE_NAME = "create-feedback-success-email";
     public static final String SLASH = "/";
     public static final String NO_FILES_MSG = "No Files";
+    public static final String NO_DATA_FOUND_MSG = "No data found";
 
     private AppConstants(){
         throw new IllegalStateException("You can't create object for AppConstants utility class");

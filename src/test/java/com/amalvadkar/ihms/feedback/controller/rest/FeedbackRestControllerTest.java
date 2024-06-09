@@ -21,10 +21,12 @@ import static io.restassured.RestAssured.given;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 
 @Sql("/feedback-test-data.sql")
 @Sql("/add_test_user_and_delete_all_users_except_system_user.sql")
-class FeedBackRestControllerTest extends AbstractIT {
+class FeedbackRestControllerTest extends AbstractIT {
 
     @Autowired
     FileMetadataRepository fileMetadataRepo;
@@ -83,4 +85,58 @@ class FeedBackRestControllerTest extends AbstractIT {
             assertThat(receivedMessage.getAllRecipients()[0].toString()).isEqualTo("it@test.com");
         });
     }
+
+    @Test
+    void should_return_no_data_found_if_feedback_status_not_found_for_passed_feedback_status_id(){
+        String payLoad = """
+                {
+                  "feedbackId" : "01HXG3VPFKK1AZ5134DYBTPDPF"
+                }
+                """;
+
+        given().contentType(ContentType.JSON)
+                .body(payLoad)
+                .when()
+                .post("/api/ihms/feedback/check-feedback-status")
+                .then()
+                .body("data",nullValue())
+                .body("success", is(true))
+                .body("code", is(200))
+                .body("message", is("No data found"));
+    }
+
+    @Test
+    void should_return_data_if_data_available_for_passed_feedback_status_id(){
+        String payLoad = """
+              
+                {
+                  "feedbackId" : "01HZV6GTK1NRC50ERN1PRJHWQ9"
+                }
+                """;
+
+        given().contentType(ContentType.JSON)
+                .body(payLoad)
+                .when()
+                .post("/api/ihms/feedback/check-feedback-status")
+                .then()
+                .body("data.feedbackId",is("01HZV6GTK1NRC50ERN1PRJHWQ9"))
+                .body("data.feedbackTitle",is("Ticket search issue"))
+                .body("data.feedbackDescription",is("<p>I am facing ticket seach issue</p>"))
+                .body("data.createdOn",is("2024-06-08T05:53:09Z"))
+                .body("data.createdBy",is("Test"))
+                .body("data.updatedOn",is("2024-06-08T06:53:09Z"))
+                .body("data.updatedBy",is("Test 2"))
+                .body("data.reviewedBy",is("Test 2"))
+                .body("data.reviewedOn",is("2024-06-08T06:53:09Z"))
+                .body("data.reviewComment",is("<p>We will fix soon, do not worry</p>"))
+                .body("data.feedbackStatus",is("ACCEPTED"))
+                .body("success", is(true))
+                .body("code", is(200))
+                .body("message", is("Fetched Successfully"));
+    }
+
+
+
+
+
 }
