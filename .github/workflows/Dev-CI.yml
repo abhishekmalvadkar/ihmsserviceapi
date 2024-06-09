@@ -40,5 +40,19 @@ jobs:
         name: Sonar Scan
         run: ./mvnw --no-transfer-progress initialize sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
+      - if: ${{ github.ref == 'refs/heads/develop' }}
+        name: Run Snyk Test
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          npm install -g snyk
+          snyk test
+
+      - if: ${{ github.ref == 'refs/heads/develop' }}
+        name: Upload snyk test result to snyk
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: snyk monitor
  
   
