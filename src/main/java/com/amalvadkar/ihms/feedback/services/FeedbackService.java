@@ -15,9 +15,9 @@ import com.amalvadkar.ihms.common.utils.Sanitizer;
 import com.amalvadkar.ihms.email.dto.MailDTO;
 import com.amalvadkar.ihms.email.sender.EmailSender;
 import com.amalvadkar.ihms.feedback.mapper.FeedbackMapper;
-import com.amalvadkar.ihms.feedback.models.request.CheckFeedBackStatusReqModel;
+import com.amalvadkar.ihms.feedback.models.request.CheckFeedbackStatusReqModel;
 import com.amalvadkar.ihms.feedback.models.request.CreateFeedbackReqModel;
-import com.amalvadkar.ihms.feedback.models.response.FeedBackStatusResponse;
+import com.amalvadkar.ihms.feedback.models.response.FeedbackStatusResponse;
 import com.amalvadkar.ihms.files.helpers.DataBucketHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,14 +57,14 @@ public class FeedbackService {
         return CustomResModel.success(Map.of(AppConstants.FEEDBACK_ID, savedFeedbackEntity.getId()), AppConstants.CREATED_SUCCESSFULLY_RESPONSE_MESSAGE);
     }
 
-    public CustomResModel checkFeedBackStatus(CheckFeedBackStatusReqModel checkFeedBackStatusReqModel){
+    public CustomResModel checkFeedBackStatus(CheckFeedbackStatusReqModel checkFeedBackStatusReqModel){
         return feedBackRepo.findFeedbackByFeedbackId(checkFeedBackStatusReqModel.feedbackId())
                 .map(this::prepareCheckFeedbackResModel)
                 .orElseGet(() -> CustomResModel.success(null , NO_DATA_FOUND_MSG));
     }
 
     private CustomResModel prepareCheckFeedbackResModel(FeedBackEntity feedBackEntity) {
-        FeedBackStatusResponse feedBackStatusModel = feedBackMapper.toFeedBackStatusModel(feedBackEntity);
+        FeedbackStatusResponse feedBackStatusModel = feedBackMapper.toFeedBackStatusModel(feedBackEntity);
         return CustomResModel.success(feedBackStatusModel, FETCHED_SUCCESSFULLY_RESPONSE_MESSAGE);
     }
 

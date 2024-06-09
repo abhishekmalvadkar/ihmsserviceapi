@@ -2,7 +2,7 @@ package com.amalvadkar.ihms.feedback.controller.rest;
 
 
 import com.amalvadkar.ihms.common.models.response.CustomResModel;
-import com.amalvadkar.ihms.feedback.models.request.CheckFeedBackStatusReqModel;
+import com.amalvadkar.ihms.feedback.models.request.CheckFeedbackStatusReqModel;
 import com.amalvadkar.ihms.feedback.services.FeedbackService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +36,7 @@ public class FeedbackRestController {
     }
 
     @PostMapping(ENDPOINT_CHECK_FEEDBACK_STATUS)
-    public ResponseEntity<CustomResModel> checkFeedBackStatus(@Valid @RequestBody CheckFeedBackStatusReqModel checkFeedBackStatusReqModel){
+    public ResponseEntity<CustomResModel> checkFeedBackStatus(@Valid @RequestBody CheckFeedbackStatusReqModel checkFeedBackStatusReqModel){
        return ResponseEntity.ok(this.feedbackService.checkFeedBackStatus(checkFeedBackStatusReqModel));
     }
 

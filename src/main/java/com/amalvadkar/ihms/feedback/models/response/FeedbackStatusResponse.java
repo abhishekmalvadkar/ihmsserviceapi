@@ -8,7 +8,7 @@ import java.time.Instant;
 
 @Getter
 @Setter
-public class FeedBackStatusResponse {
+public class FeedbackStatusResponse {
 
     private String feedbackId;
     private String feedbackTitle;
