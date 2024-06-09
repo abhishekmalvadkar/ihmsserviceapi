@@ -11,7 +11,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-      security-events: write
 
     steps:
       - uses: actions/checkout@v4
@@ -30,12 +29,6 @@ jobs:
          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
          restore-keys: |
            ${{ runner.os }}-maven-
-
-      - if: ${{ github.ref == 'refs/heads/develop' }} 
-        name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
-        with:
-         languages: java
           
       - name: Build with Maven
         run: ./mvnw --no-transfer-progress clean verify
@@ -47,29 +40,5 @@ jobs:
         name: Sonar Scan
         run: ./mvnw --no-transfer-progress initialize sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
-      - if: ${{ github.ref == 'refs/heads/develop' }} 
-        name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3     
-      
-      - if: ${{ github.ref == 'refs/heads/develop' }}
-        name: Run Snyk Code Test
-        continue-on-error: true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: |
-          npm install -g snyk
-          snyk code test --sarif > snyk-code.sarif
-
-      - if: ${{ github.ref == 'refs/heads/develop' }}
-        name: Upload result to snyk
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk monitor
-
-      - if: ${{ github.ref == 'refs/heads/develop' }} 
-        name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: snyk-code.sarif
-
+ 
   
