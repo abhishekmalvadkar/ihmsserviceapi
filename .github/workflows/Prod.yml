@@ -1,0 +1,43 @@
+name: Deploy To Prod Env
+
+env:
+  APP_NAME: ihmsserviceapi
+
+on:
+  workflow_dispatch
+    
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+          
+      - name: Build with Maven
+        run: ./mvnw --no-transfer-progress clean verify
+        env:
+         GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 'Login to GitHub Container Registry'
+        uses: docker/login-action@v3
+        with:
+            registry: ghcr.io
+            username: ${{github.actor}}
+            password: ${{secrets.GITHUB_TOKEN}}
+            
+      - name: Build and upload docker image to GHCR for prod env
+        run: |
+           docker build . --tag ghcr.io/${{ github.actor }}/prod-${{ env.APP_NAME }}:latest
+           docker push ghcr.io/${{ github.actor }}/prod-${{ env.APP_NAME }}:latest
