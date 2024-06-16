@@ -40,6 +40,7 @@ public abstract class AbstractIT {
 
     @DynamicPropertySource
     private static void registerRedisProperties(DynamicPropertyRegistry registry) {
+        REDIS_CONTAINER.start();
         registry.add("spring.redis.host", REDIS_CONTAINER::getHost);
         registry.add("spring.redis.port", () -> REDIS_CONTAINER.getMappedPort(6379).toString());
     }
