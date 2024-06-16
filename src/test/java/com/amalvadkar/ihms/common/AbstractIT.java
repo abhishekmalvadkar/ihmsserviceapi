@@ -5,6 +5,7 @@ import com.icegreen.greenmail.configuration.GreenMailConfiguration;
 import com.icegreen.greenmail.junit5.GreenMailExtension;
 import com.icegreen.greenmail.util.ServerSetupTest;
 import io.restassured.RestAssured;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -13,8 +14,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
+import org.testcontainers.junit.jupiter.Container;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -22,7 +22,6 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @Tag("it")
 @Import({ContainersConfig.class , TestConfig.class})
 @ActiveProfiles("it")
-@Testcontainers
 public abstract class AbstractIT {
 
     @RegisterExtension
@@ -30,14 +29,17 @@ public abstract class AbstractIT {
             .withConfiguration(GreenMailConfiguration.aConfig().withUser("user", "admin"))
             .withPerMethodLifecycle(false);
 
-    static {
-        GenericContainer<?> redis = new GenericContainer<>(DockerImageName.parse("redis:5.0.3-alpine"))
-                .withExposedPorts(6379);
-        redis.start();
-        System.setProperty("spring.redis.host", redis.getHost());
-        System.setProperty("spring.redis.port", redis.getMappedPort(6379).toString());
-    }
+    // Define the Redis container
+    @Container
+    public static GenericContainer<?> redis = new GenericContainer<>("redis:6.0.9")
+            .withExposedPorts(6379);
 
+    // Initialize Redis connection properties
+    @BeforeAll
+    public static void setUpBeforeAll() {
+        System.setProperty("spring.redis.host", redis.getHost());
+        System.setProperty("spring.redis.port", String.valueOf(redis.getFirstMappedPort()));
+    }
     @LocalServerPort
     int port;
 
