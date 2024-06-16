@@ -6,7 +6,6 @@ import com.amalvadkar.ihms.holiday.models.request.FetchHolidayOverviewReqModel;
 import com.amalvadkar.ihms.holiday.services.HolidayOverviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +28,6 @@ public class HolidayOverviewRestController {
     }
 
     @PostMapping(ENDPOINT_FETCH_HOLIDAY_OVERVIEW)
-    @Scheduled
     @IhmsCache(expiryTimeInSec = "86400", cacheKeyPrefix = FETCH_HOLIDAY_OVERVIEW)
     public ResponseEntity<CustomResModel> fetchHolidayOverview(@RequestBody FetchHolidayOverviewReqModel fetchHolidayOverviewReqModel){
         return ResponseEntity.ok(holidayOverviewService.fetchHolidayOverview(fetchHolidayOverviewReqModel));
