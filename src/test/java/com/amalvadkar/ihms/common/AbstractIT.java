@@ -5,7 +5,6 @@ import com.icegreen.greenmail.configuration.GreenMailConfiguration;
 import com.icegreen.greenmail.junit5.GreenMailExtension;
 import com.icegreen.greenmail.util.ServerSetupTest;
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -30,12 +29,10 @@ public abstract class AbstractIT {
     protected static GreenMailExtension greenMail = new GreenMailExtension(ServerSetupTest.SMTP)
             .withConfiguration(GreenMailConfiguration.aConfig().withUser("user", "admin"))
             .withPerMethodLifecycle(false);
-    static GenericContainer<?> redis;
+    static final GenericContainer<?> redis = new GenericContainer<>(DockerImageName.parse("redis:7.2.4-alpine"))
+            .withExposedPorts(6379);
 
-    @BeforeAll
-    static void beforeAll() {
-        redis = new GenericContainer<>(DockerImageName.parse("redis:7.2.4-alpine"))
-                .withExposedPorts(6379);
+    static {
         redis.start();
         System.out.println("Fetch settings");
         System.setProperty("spring.data.redis.host", redis.getHost());
