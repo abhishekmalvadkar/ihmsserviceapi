@@ -78,7 +78,7 @@ class HolidayOverviewRestControllerTest extends AbstractIT {
                 .when()
                 .post(endPointUrl)
                 .then()
-                .header("Content-Cached", "cache-hit")
+                .header("Content-Cached", "cache-miss")
                 .body("data.content", hasSize(2))
                 .body("data.content[0].holidayId", is(1))
                 .body("data.content[0].holidayDate", is("14 Jan 2024"))
