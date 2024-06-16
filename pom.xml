@@ -92,8 +92,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.testcontainers</groupId>
-			<artifactId>redis</artifactId>
-			<version>1.16.2</version> <!-- Adjust version as per latest -->
+			<artifactId>testcontainers-redis</artifactId>
+			<version>1.16.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
