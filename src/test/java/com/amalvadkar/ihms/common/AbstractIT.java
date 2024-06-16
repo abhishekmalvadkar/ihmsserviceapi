@@ -36,6 +36,7 @@ public abstract class AbstractIT {
 
 
     static {
+        container.start();
         System.setProperty("spring.redis.host", container.getHost());
         System.setProperty("spring.redis.port", String.valueOf(container.getFirstMappedPort()));
     }
