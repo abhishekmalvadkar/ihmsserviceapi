@@ -31,7 +31,7 @@ public abstract class AbstractIT {
     // Define the Redis container
     @Container
     private static final RedisContainer container = new RedisContainer(
-            RedisContainer.DEFAULT_IMAGE_NAME.withTag(RedisContainer.DEFAULT_TAG));
+            RedisContainer.DEFAULT_IMAGE_NAME.withTag(RedisContainer.DEFAULT_TAG)).withExposedPorts(6379);
 
 
 
