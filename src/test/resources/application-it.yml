@@ -9,3 +9,8 @@ spring:
 ihms:
   email-send-enabled: true
   blobStorageEnabled: false
+
+logging:
+  level:
+    'com.amalvadkar.ihms' : debug
+
