@@ -13,7 +13,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -22,7 +21,6 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @Tag("it")
 @Import({ContainersConfig.class , TestConfig.class})
 @ActiveProfiles("it")
-@Testcontainers
 public abstract class AbstractIT {
 
     @RegisterExtension
