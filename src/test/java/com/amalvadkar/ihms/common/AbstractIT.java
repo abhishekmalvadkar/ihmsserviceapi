@@ -36,7 +36,7 @@ public abstract class AbstractIT {
         redis.start();
         System.out.println("Fetch settings");
         System.setProperty("spring.data.redis.host", redis.getHost());
-        System.setProperty("spring.data.redis.host", redis.getMappedPort(6379).toString());
+        System.setProperty("spring.data.redis.port", redis.getMappedPort(6379).toString());
         System.out.println("The local port mapped to 6379 is " + redis.getMappedPort(6379).toString());
     }
 
