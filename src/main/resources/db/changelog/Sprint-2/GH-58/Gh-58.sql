@@ -3,7 +3,7 @@
 --changeset Abhishek Malvadkar:1-create-files-meta-data-table
 create table files_metadata
 (
-    id varchar(50) primary key,
+    id bigint primary key auto_increment ,
     category varchar(50) not null,
     record_id varchar(50) not null,
     file_name varchar(255) not null,
@@ -11,8 +11,8 @@ create table files_metadata
     delete_flag bit(1) not null default 0,
     created_on datetime not null,
     created_by bigint not null,
-    updated_on datetime,
-    updated_by bigint
+    updated_on datetime not null,
+    updated_by bigint not null
 );
 
 --changeset Abhishek Malvadkar:2-create-foreign-key-constraints-for-files-meta-data-table

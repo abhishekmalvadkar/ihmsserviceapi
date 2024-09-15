@@ -10,7 +10,7 @@ import java.time.Instant;
 @Setter
 public class FeedbackStatusResponse {
 
-    private String feedbackId;
+    private Long feedbackId;
     private String feedbackTitle;
 
     private String feedbackDescription;

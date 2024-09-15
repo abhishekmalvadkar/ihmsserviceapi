@@ -26,6 +26,13 @@ public class GlobalExceptionHandler {
         return CustomResModel.fail(errorMessages, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(IhmsException.class)
+    public CustomResModel handleIhmsException(IhmsException ex) {
+        logException(ex);
+        List<String> errorMessages = List.of(ex.getMessage());
+        return CustomResModel.fail(errorMessages, ex.getCode());
+    }
+
     @ExceptionHandler(Exception.class)
     public CustomResModel handleException(Exception ex) {
         logException(ex);

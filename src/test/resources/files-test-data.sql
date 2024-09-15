@@ -2,12 +2,10 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 delete from files_metadata;
 
-insert into files_metadata (id, category, record_id, file_name, path, created_on, created_by) values
-('01HXG3VPFKKZAZ5134DYBTPDPF', 'FEEDBACK', '01HXG3VPD756QV0456BV2NW1B2', 'img_1.png', 'feedback-images/01HXG3VPD756QV0456BV2NW1B2', "2024-05-11 12:23:33", 2),
-('01HXG3VPFMFPC0WP5WK01CSH3H', 'FEEDBACK', '01HXG3VPD756QV0456BV2NW1B2', 'img_2.png', 'feedback-images/01HXG3VPD756QV0456BV2NW1B2', "2024-05-11 12:23:33", 2);
+insert into files_metadata (id, category, record_id, file_name, path, created_on, created_by, updated_on, updated_by) values
+(1, 'FEEDBACK', 1, 'img_1.png', 'feedback-images/1', "2024-05-11 12:23:33", 1, "2024-05-11 12:23:33", 1),
+(2, 'FEEDBACK', 1, 'img_2.png', 'feedback-images/1', "2024-05-11 12:23:33", 1, "2024-05-11 12:23:33", 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
-
-select utc_timestamp();
 
 

@@ -1,8 +1,8 @@
 package com.amalvadkar.ihms.files.request;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 public record FetchFilesRequest(
-        @NotEmpty(message = "recordId is required")
-        String recordId
+        @NotNull(message = "recordId is required")
+        Long recordId
 ) {}
