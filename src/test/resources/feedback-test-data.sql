@@ -19,17 +19,17 @@ insert into feedback
 )
 values
 (
-    '01HZV6GTK1NRC50ERN1PRJHWQ9',
+    1,
     'Ticket search issue',
     '<p>I am facing ticket seach issue</p>',
     '<p>We will fix soon, do not worry</p>',
-     3,
+     1,
      '2024-06-08 06:53:09',
     'ACCEPTED',
     '2024-06-08 05:53:09',
-    2,
+    1,
     '2024-06-08 06:53:09',
-    3
+    1
 );
 
 

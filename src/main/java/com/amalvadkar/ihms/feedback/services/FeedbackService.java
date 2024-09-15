@@ -97,6 +97,7 @@ public class FeedbackService {
             fileMetadataEntity.setFileName(sanitizedFileName);
             fileMetadataEntity.setPath(directoryPath);
             fileMetadataEntity.setCreatedBy(userEntity);
+            fileMetadataEntity.setUpdatedBy(userEntity);
 
             fileMetadataEntityListToSave.add(fileMetadataEntity);
         }
@@ -110,6 +111,7 @@ public class FeedbackService {
         feedBackEntity.setTitle(createFeedbackReqModel.feedbackTitle());
         feedBackEntity.setDescription(sanitizedDescription);
         feedBackEntity.setCreatedBy(userEntity);
+        feedBackEntity.setUpdatedBy(userEntity);
         return feedBackRepo.save(feedBackEntity);
     }
 

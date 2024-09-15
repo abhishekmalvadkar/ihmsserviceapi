@@ -4,9 +4,5 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <include file="db/changelog/Sprint-1/Sprint-1.xml"/>
-    <include file="db/changelog/Sprint-2/Sprint-2.xml"/>
-    <include file="db/changelog/Sprint-7/Sprint-7.xml"/>
-    <include file="db/changelog/stored_procedures/sp.xml"/>
-    <include file="db/changelog/Sprint-8/Sprint-8.xml"/>
+    <include file="db/changelog/Sprint-7/GH-111/GH-111.sql"/>
 </databaseChangeLog>

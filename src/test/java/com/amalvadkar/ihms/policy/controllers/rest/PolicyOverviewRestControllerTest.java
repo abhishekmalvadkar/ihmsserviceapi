@@ -16,7 +16,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 @Sql("/policy-overview-test-data.sql")
-@Sql("/add_test_user_and_delete_all_users_except_system_user.sql")
 class PolicyOverviewRestControllerTest extends AbstractIT {
 
     @Autowired

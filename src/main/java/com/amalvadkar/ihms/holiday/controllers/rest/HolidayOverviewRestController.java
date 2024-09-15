@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,8 +30,9 @@ public class HolidayOverviewRestController {
 
     @PostMapping(ENDPOINT_FETCH_HOLIDAY_OVERVIEW)
     @IhmsCache(expiryTimeInSec = "86400", cacheKeyPrefix = FETCH_HOLIDAY_OVERVIEW)
-    public ResponseEntity<CustomResModel> fetchHolidayOverview(@RequestBody FetchHolidayOverviewReqModel fetchHolidayOverviewReqModel){
-        return ResponseEntity.ok(holidayOverviewService.fetchHolidayOverview(fetchHolidayOverviewReqModel));
+    public ResponseEntity<CustomResModel> fetchHolidayOverview(@RequestBody FetchHolidayOverviewReqModel fetchHolidayOverviewReqModel,
+                                                               @RequestHeader("roleId") Long roleId){
+        return ResponseEntity.ok(holidayOverviewService.fetchHolidayOverview(fetchHolidayOverviewReqModel, roleId));
     }
 
 }

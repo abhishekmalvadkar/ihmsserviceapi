@@ -25,7 +25,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
 @Sql("/feedback-test-data.sql")
-@Sql("/add_test_user_and_delete_all_users_except_system_user.sql")
 class FeedbackRestControllerTest extends AbstractIT {
 
     @Autowired
@@ -45,7 +44,7 @@ class FeedbackRestControllerTest extends AbstractIT {
 
         Response response = given()
                 .contentType(ContentType.MULTIPART)
-                .header("userid", 2)
+                .header("userid", 1)
                 .formParam("jsondata", jsonData)
                 .multiPart("files", "img.png", imgBytes)
                 .when()
@@ -63,7 +62,8 @@ class FeedbackRestControllerTest extends AbstractIT {
         int code = response.path("code");
         assertThat(code).isEqualTo(200);
 
-        String newCreatedFeedbackId = response.path("data.feedbackId");
+        Integer feedbackId = response.path("data.feedbackId");
+        Long newCreatedFeedbackId = Long.parseLong(feedbackId.toString());
 
         List<FileMetadataEntity> fileMetadataEntityList = fileMetadataRepo.findAllByRecordId(newCreatedFeedbackId);
 
@@ -82,7 +82,7 @@ class FeedbackRestControllerTest extends AbstractIT {
             assertThat(mailBody).contains("<p>I am facing ticket order issue</p>");
             assertThat(mailBody).contains("SUBMITTED");
             assertThat(receivedMessage.getAllRecipients()).hasSize(1);
-            assertThat(receivedMessage.getAllRecipients()[0].toString()).isEqualTo("it@test.com");
+            assertThat(receivedMessage.getAllRecipients()[0].toString()).isEqualTo("test@test.com");
         });
     }
 
@@ -90,7 +90,7 @@ class FeedbackRestControllerTest extends AbstractIT {
     void should_return_no_data_found_if_feedback_status_not_found_for_passed_feedback_status_id(){
         String payLoad = """
                 {
-                  "feedbackId" : "01HXG3VPFKK1AZ5134DYBTPDPF"
+                  "feedbackId" :2
                 }
                 """;
 
@@ -110,7 +110,7 @@ class FeedbackRestControllerTest extends AbstractIT {
         String payLoad = """
               
                 {
-                  "feedbackId" : "01HZV6GTK1NRC50ERN1PRJHWQ9"
+                  "feedbackId" : 1
                 }
                 """;
 
@@ -119,14 +119,14 @@ class FeedbackRestControllerTest extends AbstractIT {
                 .when()
                 .post("/api/ihms/feedback/check-feedback-status")
                 .then()
-                .body("data.feedbackId",is("01HZV6GTK1NRC50ERN1PRJHWQ9"))
+                .body("data.feedbackId",is(1))
                 .body("data.feedbackTitle",is("Ticket search issue"))
                 .body("data.feedbackDescription",is("<p>I am facing ticket seach issue</p>"))
                 .body("data.createdOn",is("2024-06-08T05:53:09Z"))
-                .body("data.createdBy",is("Test"))
+                .body("data.createdBy",is("SYSTEM"))
                 .body("data.updatedOn",is("2024-06-08T06:53:09Z"))
-                .body("data.updatedBy",is("Test 2"))
-                .body("data.reviewedBy",is("Test 2"))
+                .body("data.updatedBy",is("SYSTEM"))
+                .body("data.reviewedBy",is("SYSTEM"))
                 .body("data.reviewedOn",is("2024-06-08T06:53:09Z"))
                 .body("data.reviewComment",is("<p>We will fix soon, do not worry</p>"))
                 .body("data.feedbackStatus",is("ACCEPTED"))

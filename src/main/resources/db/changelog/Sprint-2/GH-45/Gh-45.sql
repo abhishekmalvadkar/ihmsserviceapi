@@ -3,7 +3,7 @@
 --changeset Abhishek Malvadkar:1-create-feedback-table
 create table feedback
 (
-    id varchar(50) primary key,
+    id bigint auto_increment primary key,
     title varchar(150) not null,
     description varchar(5000) not null,
     status varchar(45) not null,

@@ -34,7 +34,7 @@ public class FilesService {
         return CustomResModel.success(signedUrl, CREATED_SUCCESSFULLY_RESPONSE_MESSAGE);
     }
 
-    public CustomResModel fetchFiles(String recordId) {
+    public CustomResModel fetchFiles(Long recordId) {
         List<FetchFilesContentDTO> fetchFilesContentDTOList = fileMetadataRepo
                 .findFilesMetadataByRecordId(recordId);
         FetchFilesResModel fetchFilesResModel = new FetchFilesResModel(fetchFilesContentDTOList);
