@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21.0.4_7-jre
+FROM eclipse-temurin:21.0.12_8-jre
 MAINTAINER "Abhishek M"
 COPY target/ihmsserviceapi.jar  /app/app.jar
 WORKDIR /app
